@@ -12,10 +12,13 @@ public class Robot {
     public IntakePT intake;
     public SlidePT slide;
 
-    public Robot(RobotParametersPT params, HardwareMap hardwareMap){
-        driveTrain = new DriveTrainPT(params,hardwareMap);
-        intake = new IntakePT(params,hardwareMap);
-        slide = new SlidePT(params, hardwareMap);
+    public Robot(RobotParametersPT params, HardwareMap hardwareMap, boolean isDriveTrain, boolean isIntake, boolean isSlide){
+        if (isDriveTrain)
+            driveTrain = new DriveTrainPT(params,hardwareMap);
+        if (isIntake)
+            intake = new IntakePT(params,hardwareMap);
+        if (isSlide)
+            slide = new SlidePT(params, hardwareMap);
     }
 
     public void teleopDrive(double drive, double strafe, double rotate){

@@ -21,7 +21,7 @@ public class AutoOpPT extends LinearOpMode {
     @Override
     public void runOpMode(){
         params = new RobotParametersPT();
-        myRobot = new Robot(params,hardwareMap);
+        myRobot = new Robot(params,hardwareMap,true,true,true);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 

@@ -15,7 +15,7 @@ public class TestOpModeSlides extends OpMode {
     @Override
     public void init(){
         params = new RobotParametersPT();
-        myRobot = new Robot(params,hardwareMap);
+        myRobot = new Robot(params,hardwareMap,false,false,true);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
