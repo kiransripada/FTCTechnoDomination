@@ -1,10 +1,11 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
-
+@TeleOp(name="SlidesPT", group="TeleOp")
 public class SlidePT {
     private final DcMotor SlideMotor1;
     private final DcMotor SlideMotor2;
