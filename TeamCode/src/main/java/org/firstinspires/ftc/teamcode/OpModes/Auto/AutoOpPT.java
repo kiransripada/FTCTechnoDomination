@@ -21,7 +21,7 @@ public class AutoOpPT extends LinearOpMode {
     @Override
     public void runOpMode(){
         params = new RobotParametersPT();
-        myRobot = new Robot(params,hardwareMap,true,true,true);
+        myRobot = new Robot(params,hardwareMap,true,false,false);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -36,32 +36,13 @@ public class AutoOpPT extends LinearOpMode {
         phase = 0;
 
         while (opModeIsActive()){
-            switch (phase){
-                case 0:
-                    myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
-                    sleep(500);
-                    phase++;
-                    break;
-
-                case 1:
-                    myRobot.turnLeft(params.defaultDrivePower*params.powerReduction);
-                    sleep(500);
-                    phase++;
-                    break;
-
-                case 2:
-                    myRobot.stopDriving();
-                    myRobot.intakePullIn();
-                    sleep(3000);
-                    phase++;
-                    break;
-
-                case 3:
-                    myRobot.stopAll();
-                    break;
-            }
+            myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
+            sleep(1500);
+            phase++;
+            break;
+        }
 
         }
 
    }
-}
+

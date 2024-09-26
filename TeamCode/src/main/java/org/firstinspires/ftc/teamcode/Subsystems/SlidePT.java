@@ -8,7 +8,6 @@ import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 public class SlidePT {
     private final DcMotor SlideMotor1;
     private final DcMotor SlideMotor2;
-    private RobotParametersPT params;
 
     public SlidePT(RobotParametersPT params, HardwareMap hardwareMap){
         SlideMotor1 = hardwareMap.get(DcMotor.class, params.slideMotorName1);
@@ -18,6 +17,8 @@ public class SlidePT {
         SlideMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
+
+    private RobotParametersPT params;
 
     public void stateUpdate(RobotParametersPT.SlideState slideState, double power) {
         switch(slideState){
@@ -39,11 +40,11 @@ public class SlidePT {
         SlideMotor1.setPower(power);
       SlideMotor2.setPower(power);
     }
+
     public void slideOut(double power){
         SlideMotor1.setPower(power);
         SlideMotor2.setPower(power);
     }
-
 
     public void stop(){
         SlideMotor1.setPower(0);
