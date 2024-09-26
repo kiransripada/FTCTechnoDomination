@@ -1,7 +1,6 @@
 ## FTCTechnoDomination  
 ## NOTICE
 THIS IS MY CHANGE!!!!
-kaj;sdlkfja;lkdsjf;kasjd;lkfj
 
 This repository contains the public FTC SDK for the INTO THE DEEP (2024-2025) competition season.
 

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
+package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
-@TeleOp(name="TeleOpPT", group="TeleOp")
-public class TeleOpPT extends OpMode {
+@TeleOp(name="DrivetrainTest", group="TestOpModes")
+public class TestOpModeDriveTrain extends OpMode {
 
     private RobotParametersPT params;
     private Robot myRobot;
@@ -15,7 +15,7 @@ public class TeleOpPT extends OpMode {
     @Override
     public void init(){
         params = new RobotParametersPT();
-        myRobot = new Robot(params,hardwareMap,true,true,true);
+        myRobot = new Robot(params,hardwareMap,true,false,false);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
@@ -29,22 +29,6 @@ public class TeleOpPT extends OpMode {
 
         myRobot.teleopDrive(drive,strafe,rotate);
 
-        // Intake control
-        if (gamepad1.right_bumper) {
-            myRobot.intakePullIn();
-        } else if (gamepad1.left_bumper) {
-            myRobot.intakePushOut();
-        } else {
-            myRobot.intakeStop();
-        }
-        //Slide control
-        if (gamepad2.right_bumper) {
-            myRobot.slidePullIn();
-        } else if (gamepad2.left_bumper) {
-            myRobot.slidePushOut();
-        } else {
-            myRobot.slideStop();
-        }
 
         // Send telemetry data
         telemetry.addData("Status", "Running");

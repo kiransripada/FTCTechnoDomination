@@ -7,12 +7,14 @@ public final class RobotParametersPT{
     public static final String backRightMotorName = "BackRightDCMotor";
 
     public static final String intakeMotorName = "IntakeMotor";
-    public static final String slideMotorName = "SlideMotor";
+    public static final String slideMotorName1 = "SlideMotor1";
+    public static final String slideMotorName2 = "SlideMotor2";
     public static final double defaultIntakePower = 0.75;
     public static final double defaultDrivePower = 0.5;
     public static final double defaultSlidePower = 0.75;
 
     public static final double powerReduction = 0.75;
+
 
 
     public enum IntakeState {

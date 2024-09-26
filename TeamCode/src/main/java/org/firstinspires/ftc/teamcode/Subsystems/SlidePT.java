@@ -1,17 +1,24 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
-
 public class SlidePT {
-    private final DcMotor SlideMotor;
-    private RobotParametersPT params;
+    private final DcMotor SlideMotor1;
+    private final DcMotor SlideMotor2;
 
     public SlidePT(RobotParametersPT params, HardwareMap hardwareMap){
-        SlideMotor = hardwareMap.get(DcMotor.class, params.slideMotorName);
+        SlideMotor1 = hardwareMap.get(DcMotor.class, params.slideMotorName1);
+        SlideMotor2 = hardwareMap.get(DcMotor.class, params.slideMotorName2);
+        SlideMotor2.setDirection(DcMotor.Direction.REVERSE);
+        SlideMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        SlideMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
     }
+
+    private RobotParametersPT params;
 
     public void stateUpdate(RobotParametersPT.SlideState slideState, double power) {
         switch(slideState){
@@ -20,7 +27,7 @@ public class SlidePT {
                 break;
 
             case SLIDE_OUT:
-                slideOut(power);
+                slideOut(-power);
                 break;
 
             case STOP:
@@ -30,15 +37,20 @@ public class SlidePT {
     }
 
     public void slideIn(double power){
-        SlideMotor.setPower(power);
+        SlideMotor1.setPower(power);
+      SlideMotor2.setPower(power);
     }
 
     public void slideOut(double power){
-        SlideMotor.setPower(-power);
+        SlideMotor1.setPower(power);
+        SlideMotor2.setPower(power);
     }
 
     public void stop(){
-        SlideMotor.setPower(0);
+        SlideMotor1.setPower(0);
+        SlideMotor2.setPower(0);
+
     }
+
 
 }
