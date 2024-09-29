@@ -15,7 +15,7 @@ public class TestOpModeDriveTrain extends OpMode {
     @Override
     public void init(){
         params = new RobotParametersPT();
-        myRobot = new Robot(params,hardwareMap,true,false,false);
+        myRobot = new Robot(params,hardwareMap,true,false,false, false);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
