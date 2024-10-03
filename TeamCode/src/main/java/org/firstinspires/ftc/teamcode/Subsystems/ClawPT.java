@@ -23,7 +23,7 @@ public class ClawPT {
                 break;
 
             case TURN_OUT:
-                turnOut(-power);
+                turnOut(power);
                 break;
 
             case STOP:
