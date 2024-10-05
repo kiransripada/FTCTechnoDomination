@@ -28,7 +28,7 @@ public class AutoOpPT extends LinearOpMode {
         // Wait for the start button to be pressed
         waitForStart();
 
-        // Autonomous routine: Drive forward for 5 seconds
+        // Autonomous: Parking in observation zone
         telemetry.addData("Status", "Running");
         telemetry.update();
 

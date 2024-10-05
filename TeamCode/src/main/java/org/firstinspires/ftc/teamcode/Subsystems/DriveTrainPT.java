@@ -25,6 +25,8 @@ public class DriveTrainPT {
         FrontRightDCMotor.setDirection(DcMotor.Direction.FORWARD);
         BackLeftDCMotor.setDirection(DcMotor.Direction.FORWARD);
         BackRightDCMotor.setDirection(DcMotor.Direction.FORWARD);
+        FrontLeftDCMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        FrontLeftDCMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Set all motors to brake when power is zero
         FrontLeftDCMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -72,5 +74,7 @@ public class DriveTrainPT {
         BackLeftDCMotor.setPower(0);
         BackRightDCMotor.setPower(0);
     }
+
+
 
 }
