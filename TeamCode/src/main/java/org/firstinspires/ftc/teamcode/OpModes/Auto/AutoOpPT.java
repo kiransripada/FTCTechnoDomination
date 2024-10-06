@@ -17,7 +17,7 @@ public class AutoOpPT extends LinearOpMode {
     private Robot myRobot;
     private ElapsedTime runtime = new ElapsedTime();
     int phase = 0;
-//hello world; we are about to override
+    //hello world; we are about to override
     @Override
     public void runOpMode(){
         params = new RobotParametersPT();
@@ -35,14 +35,57 @@ public class AutoOpPT extends LinearOpMode {
         runtime.reset();
         phase = 0;
 
+       /*
+       while (opModeIsActive()){
+            myRobot.driveTrain.driveStraight(.5);
+            sleep(2000);
+            break;
+        }
+        */
+
         while (opModeIsActive()){
-            myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
-            sleep(1500);
+
+            myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction,5);
+            while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()){
+            }
+            myRobot.driveTrain.stop();
+            sleep(2000);
+
+            myRobot.driveTrain.driveStraight(-params.defaultDrivePower*params.powerReduction,-5);
+            while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()){
+            }
+            myRobot.driveTrain.stop();
+            sleep(2000);
+
+            myRobot.driveTrain.setWithoutEncoder();
+
+            telemetry.addData("Yaw is 1: ",myRobot.driveTrain.getYaw());
+            telemetry.update();
+            sleep(2500);
+
+            myRobot.driveTrain.turnRight(90);
+            myRobot.driveTrain.alignAngle(90);
+
+            telemetry.addData("Yaw is 2: ",myRobot.driveTrain.getYaw());
+            telemetry.update();
+            sleep(2500);
+
+            myRobot.driveTrain.turnLeft(-90);
+            myRobot.driveTrain.alignAngle(-90);
+
+            telemetry.addData("Yaw is 3: ",myRobot.driveTrain.getYaw());
+            telemetry.update();
+            sleep(2500);
+
+            myRobot.driveTrain.stop();
+            sleep(2000);
             phase++;
             break;
         }
 
-        }
+        myRobot.driveTrain.stop();
 
-   }
+    }
+
+}
 

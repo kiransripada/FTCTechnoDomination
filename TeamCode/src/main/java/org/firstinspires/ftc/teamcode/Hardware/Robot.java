@@ -30,16 +30,9 @@ public class Robot {
     }
 
     public void driveStraight(double power){
-        driveTrain.driveStraight(power);
+        driveTrain.driveStraight(power,-50);
     }
 
-    public void turnLeft(double power){
-        driveTrain.turnLeft(power);
-    }
-
-    public void turnRight(double power){
-        driveTrain.turnRight(power);
-    }
 
     public void stopDriving(){
         driveTrain.stop();

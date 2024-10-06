@@ -13,12 +13,21 @@ public final class RobotParametersPT{
     public static final String ClawServoName2 = "ClawServo2";
     public static final double defaultIntakePower = 0.75;
     public static final double defaultDrivePower = 0.5;
+    public static final double defaultTurnPower = 0.25;
     public static final double defaultSlidePower = 0.75;
     public static final double defaultClawPower = 0.75;
 
     public static final double powerReduction = 0.75;
 
+    public static final double Counts_Per_Motor_Rev = 384.5;
+    public static final double Drive_Gear_Reduction = 1.0;
+    public static final double Wheel_Diameter = 3.78; //96 mm in inches
 
+    public enum DriveTrain {
+        START,
+        REACHED,
+        STOP
+    }
 
     public enum IntakeState {
         PULL_IN,
