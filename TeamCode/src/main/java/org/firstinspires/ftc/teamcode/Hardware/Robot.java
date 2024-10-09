@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Hardware;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.Subsystems.ClawPT;
 import org.firstinspires.ftc.teamcode.Subsystems.DriveTrainPT;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakePT;
 import org.firstinspires.ftc.teamcode.Subsystems.SlidePT;
@@ -11,14 +12,17 @@ public class Robot {
     public DriveTrainPT driveTrain;
     public IntakePT intake;
     public SlidePT slide;
+    public ClawPT claw;
 
-    public Robot(RobotParametersPT params, HardwareMap hardwareMap, boolean isDriveTrain, boolean isIntake, boolean isSlide){
+    public Robot(RobotParametersPT params, HardwareMap hardwareMap, boolean isDriveTrain, boolean isIntake, boolean isSlide, boolean isClaw){
         if (isDriveTrain)
             driveTrain = new DriveTrainPT(params,hardwareMap);
         if (isIntake)
             intake = new IntakePT(params,hardwareMap);
         if (isSlide)
             slide = new SlidePT(params, hardwareMap);
+        if (isClaw)
+            claw = new ClawPT(params, hardwareMap);
     }
 
     public void teleopDrive(double drive, double strafe, double rotate){
@@ -71,9 +75,22 @@ public class Robot {
         slide.stateUpdate(RobotParametersPT.SlideState.STOP,params.defaultSlidePower);
     }
 
+    public void clawTurnIn(){
+        claw.stateUpdate(RobotParametersPT.ClawState.TURN_IN, params.defaultClawPower);
+    }
+
+    public void clawTurnOut(){
+        claw.stateUpdate(RobotParametersPT.ClawState.TURN_OUT, params.defaultClawPower);
+    }
+
+    public void clawStop(){
+        claw.stateUpdate(RobotParametersPT.ClawState.STOP, params.defaultClawPower);
+    }
+
     public void stopAll(){
         driveTrain.stop();
         intake.stop();
+
     }
 
 }

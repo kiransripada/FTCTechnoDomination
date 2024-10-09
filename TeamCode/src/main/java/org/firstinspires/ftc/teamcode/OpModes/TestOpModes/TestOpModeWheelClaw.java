@@ -1,38 +1,35 @@
 package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
-
+import com.qualcomm.robotcore.hardware.Servo;
+import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
-import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
-@TeleOp(name="SlidesTest", group="TestOpModes")
-public class TestOpModeSlides extends OpMode {
+@TeleOp(name="WheelClawTest", group="TestOpModes")
+public class TestOpModeWheelClaw extends OpMode {
+
+    private Servo ClawCRServo1;
+    private Servo ClawCRServo2;
 
     private RobotParametersPT params;
     private Robot myRobot;
 
     @Override
-    public void init(){
+    public void init() {
         params = new RobotParametersPT();
-        myRobot = new Robot(params,hardwareMap,false,false,true, false);
+        myRobot = new Robot(params,hardwareMap,false,false,false, true);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
-//hello
-    //this is prem hello
+
     @Override
-    public void loop(){
-
-        //Slide control
+    public void loop() {
         if (gamepad2.right_bumper) {
-            myRobot.slidePullIn();
+            myRobot.clawTurnIn();
         } else if (gamepad2.left_bumper) {
-            myRobot.slidePushOut();
+            myRobot.clawTurnOut();
         } else {
-            myRobot.slideStop();
+            myRobot.clawStop();
         }
-
     }
 }
-

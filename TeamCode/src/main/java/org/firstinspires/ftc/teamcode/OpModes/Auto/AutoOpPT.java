@@ -21,14 +21,14 @@ public class AutoOpPT extends LinearOpMode {
     @Override
     public void runOpMode(){
         params = new RobotParametersPT();
-        myRobot = new Robot(params,hardwareMap,true,false,false);
+        myRobot = new Robot(params,hardwareMap,true,false,false, false);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
         // Wait for the start button to be pressed
         waitForStart();
 
-        // Autonomous routine: Drive forward for 5 seconds
+        // Autonomous: Parking in observation zone
         telemetry.addData("Status", "Running");
         telemetry.update();
 
