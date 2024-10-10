@@ -37,6 +37,11 @@ public final class RobotParametersPT{
         TURN_OUT,
         STOP
     }
+    public enum ArmState {
+        MOVE_UP,
+        MOVE_DOWN,
+        STOP
+    }
 
 }
 
