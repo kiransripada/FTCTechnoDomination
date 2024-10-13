@@ -1,14 +1,8 @@
 package org.firstinspires.ftc.teamcode.Subsystems;
 
-import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
-import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.GyroSensor;
-import com.qualcomm.robotcore.hardware.IMU;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
 public class DriveTrainPT {
@@ -17,11 +11,8 @@ public class DriveTrainPT {
     private DcMotor FrontRightDCMotor;
     private DcMotor BackLeftDCMotor;
     private DcMotor BackRightDCMotor;
-    private IMU imu;
-    private YawPitchRollAngles orientation;
 
-
-    public DriveTrainPT(RobotParametersPT params, HardwareMap hardwareMap) {
+    public DriveTrainPT(RobotParametersPT params, HardwareMap hardwareMap){
         this.params = params;
         // Initialize drive motors
         FrontLeftDCMotor = hardwareMap.get(DcMotor.class, params.frontLeftMotorName);
@@ -36,9 +27,6 @@ public class DriveTrainPT {
         BackRightDCMotor.setDirection(DcMotor.Direction.FORWARD);
         FrontLeftDCMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         FrontLeftDCMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        imu = hardwareMap.get(IMU.class, "imu");
-        imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.LEFT)));
 
         // Set all motors to brake when power is zero
         FrontLeftDCMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -87,34 +75,6 @@ public class DriveTrainPT {
         BackRightDCMotor.setPower(0);
     }
 
-    public double getYaw() {
-        orientation = imu.getRobotYawPitchRollAngles();
-        double currentYaw = orientation.getYaw(AngleUnit.DEGREES);
 
-        return currentYaw;
 
-    }
-
-    public void turnRightByGyro(double angle, double power) {
-        while (angle < getYaw()) {
-            FrontLeftDCMotor.setPower(power);
-            FrontRightDCMotor.setPower(power * -0.75);
-            BackLeftDCMotor.setPower(power);
-            BackRightDCMotor.setPower(power * -0.75);
-            //sleep(2000);
-        }
-    }
-
-    public void alignAngle ( double angle, double power){
-        FrontLeftDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        FrontRightDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        orientation = imu.getRobotYawPitchRollAngles();
-        double currentYaw = orientation.getYaw(AngleUnit.DEGREES);
-
-        if (currentYaw < angle) {
-            //turnLeftByGyro(angle, power);
-        } else {
-            turnRightByGyro(angle, power);
-        }
-    }
 }

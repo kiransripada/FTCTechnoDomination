@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 @Autonomous(name="AutoOpPT", group="Autonomous")
 public class AutoOpPT extends LinearOpMode {
 
+
     private RobotParametersPT params;
     private Robot myRobot;
     private ElapsedTime runtime = new ElapsedTime();
@@ -36,9 +37,11 @@ public class AutoOpPT extends LinearOpMode {
         phase = 0;
 
         while (opModeIsActive()){
-            myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
-            sleep(1500);
-            phase++;
+            //myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
+            //sleep(1500);
+            myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 41.0);
+            while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
+            myRobot.driveTrain.stop();
             break;
         }
 

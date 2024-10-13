@@ -17,6 +17,9 @@ public final class RobotParametersPT{
     public static final double defaultClawPower = 0.75;
 
     public static final double powerReduction = 0.75;
+    public static final double Counts_Per_Motor_Rev = 384.5;
+    public static final double Drive_Gear_Reduction = 1.0;
+    public static final double Wheel_Diameter = 3.78;
 
 
 
