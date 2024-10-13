@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode.OpModes.Auto;
 
-
 import androidx.annotation.NonNull;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -48,4 +47,3 @@ public class AutoOpPT extends LinearOpMode {
         }
 
    }
-
