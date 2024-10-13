@@ -21,7 +21,7 @@ public class DriveTrainPT {
     private YawPitchRollAngles orientation;
 
 
-    public DriveTrainPT(RobotParametersPT params, HardwareMap hardwareMap) {
+    public DriveTrainPT(RobotParametersPT params, HardwareMap hardwareMap){
         this.params = params;
         // Initialize drive motors
         FrontLeftDCMotor = hardwareMap.get(DcMotor.class, params.frontLeftMotorName);
@@ -30,15 +30,18 @@ public class DriveTrainPT {
         BackRightDCMotor = hardwareMap.get(DcMotor.class, params.backRightMotorName);
 
         // Set motor directions
-        FrontLeftDCMotor.setDirection(DcMotor.Direction.FORWARD);
+        FrontLeftDCMotor.setDirection(DcMotor.Direction.REVERSE);
         FrontRightDCMotor.setDirection(DcMotor.Direction.FORWARD);
-        BackLeftDCMotor.setDirection(DcMotor.Direction.FORWARD);
+        BackLeftDCMotor.setDirection(DcMotor.Direction.REVERSE);
         BackRightDCMotor.setDirection(DcMotor.Direction.FORWARD);
         FrontLeftDCMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         FrontLeftDCMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         imu = hardwareMap.get(IMU.class, "imu");
         imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.LEFT)));
+
+        FrontRightDCMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        FrontRightDCMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // Set all motors to brake when power is zero
         FrontLeftDCMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -129,7 +132,6 @@ public class DriveTrainPT {
         int newLeftTarget = FrontLeftDCMotor.getCurrentPosition() + (int)(getNewPosition(distance));
         int newRightTarget = FrontRightDCMotor.getCurrentPosition() + (int)(getNewPosition(distance));
 
-
         FrontLeftDCMotor.setTargetPosition(newLeftTarget);
         FrontRightDCMotor.setTargetPosition(newRightTarget);
         FrontLeftDCMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -140,9 +142,6 @@ public class DriveTrainPT {
         BackRightDCMotor.setPower(power);
     }
 
+
+
 }
-
-
-
-
-
