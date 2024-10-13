@@ -44,6 +44,18 @@ public class AutoOpPT extends LinearOpMode {
             break;
         }
 
-        }
+        while (opModeIsActive()){
+        //myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
+        //sleep(1500);
+        myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 41.0);
+        while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
+        myRobot.driveTrain.stop();
+        break;
+    }
+
+
+}
+
+
 
    }

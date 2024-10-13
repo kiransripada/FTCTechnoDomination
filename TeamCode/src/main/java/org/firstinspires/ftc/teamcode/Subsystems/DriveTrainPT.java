@@ -13,10 +13,10 @@ import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
 public class DriveTrainPT {
     private RobotParametersPT params;
-    private DcMotor FrontLeftDCMotor;
-    private DcMotor FrontRightDCMotor;
-    private DcMotor BackLeftDCMotor;
-    private DcMotor BackRightDCMotor;
+    public DcMotor FrontLeftDCMotor;
+    public DcMotor FrontRightDCMotor;
+    public DcMotor BackLeftDCMotor;
+    public DcMotor BackRightDCMotor;
     private IMU imu;
     private YawPitchRollAngles orientation;
 
@@ -117,4 +117,32 @@ public class DriveTrainPT {
             turnRightByGyro(angle, power);
         }
     }
+
+    public int getNewPosition(double distance) {
+        double Counts_Per_Motor_Rev = params.Counts_Per_Motor_Rev;
+        double Drive_Gear_Reduction = params.Drive_Gear_Reduction;
+        double Wheel_Diameter = params.Wheel_Diameter;
+        double Counts_Per_Inch = (Counts_Per_Motor_Rev * Drive_Gear_Reduction)/(Wheel_Diameter * 3.1415);
+        return (int)(distance * Counts_Per_Inch);
+    }
+    public void driveStraight(double power, double distance) {
+        int newLeftTarget = FrontLeftDCMotor.getCurrentPosition() + (int)(getNewPosition(distance));
+        int newRightTarget = FrontRightDCMotor.getCurrentPosition() + (int)(getNewPosition(distance));
+
+
+        FrontLeftDCMotor.setTargetPosition(newLeftTarget);
+        FrontRightDCMotor.setTargetPosition(newRightTarget);
+        FrontLeftDCMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        FrontRightDCMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        FrontLeftDCMotor.setPower(power);
+        FrontRightDCMotor.setPower(power);
+        BackLeftDCMotor.setPower(power);
+        BackRightDCMotor.setPower(power);
+    }
+
 }
+
+
+
+
+

@@ -21,8 +21,6 @@ public final class RobotParametersPT{
     public static final double Drive_Gear_Reduction = 1.0;
     public static final double Wheel_Diameter = 3.78;
 
-
-
     public enum IntakeState {
         PULL_IN,
         PUSH_OUT,
