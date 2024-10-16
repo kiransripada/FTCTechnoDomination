@@ -11,7 +11,9 @@ public final class RobotParametersPT{
     public static final String slideMotorName2 = "SlideMotor2";
     public static final String ClawServoName1 = "ClawServo1";
     public static final String ClawServoName2 = "ClawServo2";
+    public static final String armMotorName = "ArmMotor";
     public static final double defaultIntakePower = 0.75;
+    public static final double defaultArmPower = 0.75;
     public static final double defaultDrivePower = 0.5;
     public static final double defaultSlidePower = 0.75;
     public static final double defaultClawPower = 0.75;
@@ -38,9 +40,10 @@ public final class RobotParametersPT{
         TURN_OUT,
         STOP
     }
+
     public enum ArmState {
-        MOVE_UP,
-        MOVE_DOWN,
+        PIVOT_UP,
+        PIVOT_DOWN,
         STOP
     }
 
