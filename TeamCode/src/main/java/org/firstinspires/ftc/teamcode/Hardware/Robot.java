@@ -17,8 +17,8 @@ public class Robot {
     public Robot(RobotParametersPT params, HardwareMap hardwareMap, boolean isDriveTrain, boolean isIntake, boolean isSlide, boolean isClaw){
         if (isDriveTrain)
             driveTrain = new DriveTrainPT(params,hardwareMap);
-        if (isIntake)
-            intake = new IntakePT(params,hardwareMap);
+        //if (isIntake)
+          //  intake = new IntakePT(params,hardwareMap);
         if (isSlide)
             slide = new SlidePT(params, hardwareMap);
         if (isClaw)
@@ -45,20 +45,20 @@ public class Robot {
         driveTrain.stop();
     }
 
-    public void intakePullIn(){
+   // public void intakePullIn(){
         //intake.pullIn(0.5);
-        intake.stateUpdate(RobotParametersPT.IntakeState.PULL_IN,params.defaultIntakePower);
-    }
+     //   intake.stateUpdate(RobotParametersPT.IntakeState.PULL_IN,params.defaultIntakePower);
+   // }
 
-    public void intakePushOut(){
+   // public void intakePushOut(){
         //intake.pushOut(0.5);
-        intake.stateUpdate(RobotParametersPT.IntakeState.PUSH_OUT,params.defaultIntakePower);
-    }
+     //   intake.stateUpdate(RobotParametersPT.IntakeState.PUSH_OUT,params.defaultIntakePower);
+    //}
 
-    public void intakeStop(){
+    //public void intakeStop(){
         //intake.stop();
-        intake.stateUpdate(RobotParametersPT.IntakeState.STOP,params.defaultIntakePower);
-    }
+      //  intake.stateUpdate(RobotParametersPT.IntakeState.STOP,params.defaultIntakePower);
+    //}
 
     public void slidePullIn(){
         //intake.pullIn(0.5);

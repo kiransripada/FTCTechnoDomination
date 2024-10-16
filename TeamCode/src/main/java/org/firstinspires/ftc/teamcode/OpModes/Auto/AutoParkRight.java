@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
-@Autonomous(name="AutoOpPT", group="Autonomous")
+@Autonomous(name="AutoParkRight", group="Autonomous")
 public class AutoParkRight extends LinearOpMode {
 
 

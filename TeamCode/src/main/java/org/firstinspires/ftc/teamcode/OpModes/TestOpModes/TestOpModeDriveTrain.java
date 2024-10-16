@@ -27,7 +27,7 @@ public class TestOpModeDriveTrain extends OpMode {
         double strafe = gamepad1.left_stick_x * params.powerReduction;
         double rotate = gamepad1.right_stick_x * params.powerReduction;
 
-        myRobot.teleopDrive(drive,strafe,rotate);
+        myRobot.driveTrain.drive(drive,strafe,rotate);
 
 
         // Send telemetry data

@@ -30,10 +30,10 @@ public class DriveTrainPT {
         BackRightDCMotor = hardwareMap.get(DcMotor.class, params.backRightMotorName);
 
         // Set motor directions
-        FrontLeftDCMotor.setDirection(DcMotor.Direction.REVERSE);
-        FrontRightDCMotor.setDirection(DcMotor.Direction.FORWARD);
-        BackLeftDCMotor.setDirection(DcMotor.Direction.REVERSE);
-        BackRightDCMotor.setDirection(DcMotor.Direction.FORWARD);
+        FrontLeftDCMotor.setDirection(DcMotor.Direction.FORWARD);
+        FrontRightDCMotor.setDirection(DcMotor.Direction.REVERSE);
+        BackLeftDCMotor.setDirection(DcMotor.Direction.FORWARD);
+        BackRightDCMotor.setDirection(DcMotor.Direction.REVERSE);
         FrontLeftDCMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         FrontLeftDCMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -51,6 +51,8 @@ public class DriveTrainPT {
     }
 
     public void drive(double drive, double strafe, double rotate) {
+        FrontLeftDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        FrontRightDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         double frontLeftPower = drive + strafe + rotate;
         double frontRightPower = drive - strafe - rotate;
         double backLeftPower = drive - strafe + rotate;

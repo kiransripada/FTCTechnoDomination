@@ -30,12 +30,12 @@ public class TeleOpPT extends OpMode {
         myRobot.teleopDrive(drive,strafe,rotate);
 
         // Intake control
-        if (gamepad1.right_bumper) {
-            myRobot.intakePullIn();
-        } else if (gamepad1.left_bumper) {
-            myRobot.intakePushOut();
+        if (gamepad2.dpad_left) {
+            myRobot.claw.turnIn(1);
+        } else if (gamepad2.b) {
+            myRobot.claw.turnOut(1);
         } else {
-            myRobot.intakeStop();
+            myRobot.clawStop();
         }
         //Slide control
         if (gamepad2.right_bumper) {
