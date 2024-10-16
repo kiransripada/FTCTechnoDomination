@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.Hardware;
 
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.Subsystems.ArmMotor;
 import org.firstinspires.ftc.teamcode.Subsystems.ClawPT;
 import org.firstinspires.ftc.teamcode.Subsystems.DriveTrainPT;
 import org.firstinspires.ftc.teamcode.Subsystems.IntakePT;
@@ -13,8 +14,9 @@ public class Robot {
     public IntakePT intake;
     public SlidePT slide;
     public ClawPT claw;
+    public ArmMotor arm;
 
-    public Robot(RobotParametersPT params, HardwareMap hardwareMap, boolean isDriveTrain, boolean isIntake, boolean isSlide, boolean isClaw){
+    public Robot(RobotParametersPT params, HardwareMap hardwareMap, boolean isDriveTrain, boolean isIntake, boolean isSlide, boolean isClaw, boolean isArm){
         if (isDriveTrain)
             driveTrain = new DriveTrainPT(params,hardwareMap);
         if (isIntake)
@@ -23,6 +25,8 @@ public class Robot {
             slide = new SlidePT(params, hardwareMap);
         if (isClaw)
             claw = new ClawPT(params, hardwareMap);
+        if (isArm)
+            arm = new ArmMotor(params, hardwareMap);
     }
 
     public void teleopDrive(double drive, double strafe, double rotate){
