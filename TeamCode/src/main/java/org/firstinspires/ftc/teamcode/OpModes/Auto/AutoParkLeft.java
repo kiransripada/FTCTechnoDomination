@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
-@Autonomous(name="AutoOpPT", group="Autonomous")
+@Autonomous(name="AutoParkLeft", group="Autonomous")
 public class AutoParkLeft extends LinearOpMode {
 
 
@@ -19,7 +19,7 @@ public class AutoParkLeft extends LinearOpMode {
     @Override
     public void runOpMode(){
         params = new RobotParametersPT();
-        myRobot = new Robot(params,hardwareMap,true,false,false, false);
+        myRobot = new Robot(params,hardwareMap,true,false,false, false, false);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 

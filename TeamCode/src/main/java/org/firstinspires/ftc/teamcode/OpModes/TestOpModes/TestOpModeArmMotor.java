@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
-@TeleOp(name="SlidesTest", group="TestOpModes")
-public class TestOpModeSlides extends OpMode {
+@TeleOp(name="ArmTest", group="TestOpModes")
+public class TestOpModeArmMotor extends OpMode {
 
     private RobotParametersPT params;
     private Robot myRobot;
@@ -15,22 +15,20 @@ public class TestOpModeSlides extends OpMode {
     @Override
     public void init(){
         params = new RobotParametersPT();
-        myRobot = new Robot(params,hardwareMap,false,false,true, false, false);
+        myRobot = new Robot(params,hardwareMap,false,false,true, false, true);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
-//hello
-    //this is prem hello
     @Override
     public void loop(){
 
         //Slide control
         if (gamepad2.right_bumper) {
-            myRobot.slidePullIn();
+            myRobot.arm.pivotUp(0.7);
         } else if (gamepad2.left_bumper) {
-            myRobot.slidePushOut();
+            myRobot.arm.pivotDown(0.7);
         } else {
-            myRobot.slideStop();
+            myRobot.arm.stop();
         }
 
     }

@@ -20,7 +20,7 @@ public class AutoParkRight extends LinearOpMode {
 @Override
 public void runOpMode(){
     params = new RobotParametersPT();
-    myRobot = new Robot(params,hardwareMap,true,false,false, false);
+    myRobot = new Robot(params,hardwareMap,true,false,false, false, false);
     telemetry.addData("Status", "Initialized");
     telemetry.update();
 
