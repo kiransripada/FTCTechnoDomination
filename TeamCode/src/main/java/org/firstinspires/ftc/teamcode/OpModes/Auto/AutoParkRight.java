@@ -20,7 +20,7 @@ public class AutoParkRight extends LinearOpMode {
 @Override
 public void runOpMode(){
     params = new RobotParametersPT();
-    myRobot = new Robot(params,hardwareMap,true,false,false, false, false);
+    myRobot = new Robot(params,hardwareMap,true,false,false, false);
     telemetry.addData("Status", "Initialized");
     telemetry.update();
 
@@ -35,8 +35,8 @@ public void runOpMode(){
     phase = 0;
 
     while (opModeIsActive()){
-        //myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
-        //sleep(1500);
+            //myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
+            //sleep(1500);
         myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 41.0);
         while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
         myRobot.driveTrain.stop();

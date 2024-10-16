@@ -15,7 +15,7 @@ public class TeleOpPT extends OpMode {
     @Override
     public void init(){
         params = new RobotParametersPT();
-        myRobot = new Robot(params,hardwareMap,true,true,true, true, true);
+        myRobot = new Robot(params, hardwareMap,true,true,true, true);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }

@@ -17,7 +17,7 @@ public class TestOpModeWheelClaw extends OpMode {
     @Override
     public void init() {
         params = new RobotParametersPT();
-        myRobot = new Robot(params,hardwareMap,false,false,false, true, true);
+        myRobot = new Robot(params,hardwareMap,false,false,true, false);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
