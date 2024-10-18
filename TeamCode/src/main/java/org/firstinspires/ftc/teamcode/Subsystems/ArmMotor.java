@@ -6,7 +6,7 @@ import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
 public class ArmMotor {
     private RobotParametersPT params;
-    private DcMotor ArmMotor;
+    public DcMotor ArmMotor;
 
 
 
@@ -46,20 +46,19 @@ public class ArmMotor {
         }
 
     public int getNewPosition(double distance) {
-        double Counts_Per_Motor_Rev = params.Counts_Per_Motor_Rev;
+        double Counts_Per_Motor_Arm = params.Counts_Per_Motor_Arm;
         double Drive_Gear_Reduction = params.Drive_Gear_Reduction;
-        double Wheel_Diameter = params.Wheel_Diameter;
-        double Counts_Per_Inch = (Counts_Per_Motor_Rev * Drive_Gear_Reduction)/(Wheel_Diameter * 3.1415);
-        return (int)(distance * Counts_Per_Inch);
+        double Arm_Diameter = params.Arm_Diameter;
+       // double Counts_Per_Inch_Arm = (Counts_Per_Motor_Arm * Drive_Gear_Reduction)/(Arm_Diameter * 3.1415);
+        return (int)(distance);
     }
-    public void moveArm() {
-        int newTarget = ArmMotor.getCurrentPosition() + (int)(getNewPosition(100));
+    public void moveArm(double distance) {
+        int newTarget = ArmMotor.getCurrentPosition() + (int) getNewPosition(distance);
 
         ArmMotor.setTargetPosition(newTarget);
         ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        ArmMotor.setPower(0.5);
-        ArmMotor.setPower(0.5);
+        ArmMotor.setPower(0.1);
+        ArmMotor.setPower(0.1);
     }
-
 
 }

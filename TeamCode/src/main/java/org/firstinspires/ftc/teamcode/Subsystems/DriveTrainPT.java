@@ -127,8 +127,8 @@ public class DriveTrainPT {
         double Counts_Per_Motor_Rev = params.Counts_Per_Motor_Rev;
         double Drive_Gear_Reduction = params.Drive_Gear_Reduction;
         double Wheel_Diameter = params.Wheel_Diameter;
-        double Counts_Per_Inch = (Counts_Per_Motor_Rev * Drive_Gear_Reduction)/(Wheel_Diameter * 3.1415);
-        return (int)(distance * Counts_Per_Inch);
+        double Counts_Per_Inch_Drive = (Counts_Per_Motor_Rev * Drive_Gear_Reduction)/(Wheel_Diameter * 3.1415);
+        return (int)(distance * Counts_Per_Inch_Drive);
     }
     public void driveStraight(double power, double distance) {
         int newLeftTarget = FrontLeftDCMotor.getCurrentPosition() + (int)(getNewPosition(distance));

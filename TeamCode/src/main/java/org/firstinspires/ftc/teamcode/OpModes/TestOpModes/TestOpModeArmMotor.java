@@ -15,7 +15,7 @@ public class TestOpModeArmMotor extends OpMode {
     @Override
     public void init(){
         params = new RobotParametersPT();
-        myRobot = new Robot(params,hardwareMap,false,false,true, false);
+        myRobot = new Robot(params,hardwareMap,false,false,false, true);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
     }
@@ -24,7 +24,10 @@ public class TestOpModeArmMotor extends OpMode {
 
         //Slide control
         if (gamepad2.a) {
-            myRobot.arm.moveArm();
+            myRobot.arm.moveArm(10);
+            while (myRobot.arm.ArmMotor.isBusy()) {}
+            myRobot.armStop();
+
         }
     }
 
