@@ -72,6 +72,18 @@ public class Robot {
     public void clawStop(){
         claw.stateUpdate(RobotParametersPT.ClawState.STOP, params.defaultClawPower);
     }
+    public void armPivotUp(){
+        arm.stateUpdate(RobotParametersPT.ArmState.PIVOT_UP, params.defaultArmPower);
+    }
+
+    public void armPivotDown(){
+        arm.stateUpdate(RobotParametersPT.ArmState.PIVOT_DOWN, params.defaultArmPower);
+    }
+
+    public void armStop(){
+        arm.stateUpdate(RobotParametersPT.ArmState.STOP, params.defaultArmPower);
+    }
+
 
     public void stopAll(){
         driveTrain.stop();

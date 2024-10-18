@@ -33,11 +33,11 @@ public class ArmMotor {
             }
         }
 
-        public void pivotUp ( double power){
+        public void pivotUp (double power){
             ArmMotor.setPower(power);
         }
 
-        public void pivotDown ( double power){
+        public void pivotDown (double power){
             ArmMotor.setPower(-power);
         }
 
@@ -52,13 +52,13 @@ public class ArmMotor {
         double Counts_Per_Inch = (Counts_Per_Motor_Rev * Drive_Gear_Reduction)/(Wheel_Diameter * 3.1415);
         return (int)(distance * Counts_Per_Inch);
     }
-    public void moveArm(double power, double distance) {
-        int newTarget = ArmMotor.getCurrentPosition() + (int)(getNewPosition(distance));
+    public void moveArm() {
+        int newTarget = ArmMotor.getCurrentPosition() + (int)(getNewPosition(100));
 
         ArmMotor.setTargetPosition(newTarget);
         ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        ArmMotor.setPower(power);
-        ArmMotor.setPower(power);
+        ArmMotor.setPower(0.5);
+        ArmMotor.setPower(0.5);
     }
 
 

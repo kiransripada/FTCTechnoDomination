@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
+import org.firstinspires.ftc.teamcode.Subsystems.ArmMotor;
 
 @TeleOp(name="TeleOpPT", group="TeleOp")
 public class TeleOpPT extends OpMode {
@@ -44,6 +45,14 @@ public class TeleOpPT extends OpMode {
             myRobot.slidePushOut();
         } else {
             myRobot.slideStop();
+        }
+        //Arm control
+        if (gamepad1.right_bumper) {
+            myRobot.armPivotUp();
+        } else if (gamepad1.left_bumper) {
+            myRobot.armPivotDown();
+        } else {
+            myRobot.armStop();
         }
 
         // Send telemetry data

@@ -23,14 +23,10 @@ public class TestOpModeArmMotor extends OpMode {
     public void loop(){
 
         //Slide control
-        if (gamepad2.right_bumper) {
-            myRobot.arm.pivotUp(0.7);
-        } else if (gamepad2.left_bumper) {
-            myRobot.arm.pivotDown(0.7);
-        } else {
-            myRobot.arm.stop();
+        if (gamepad2.a) {
+            myRobot.arm.moveArm();
         }
-
     }
+
 }
 
