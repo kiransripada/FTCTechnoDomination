@@ -52,7 +52,7 @@ public class ArmMotor {
         double Counts_Per_Inch = (Counts_Per_Motor_Rev * Drive_Gear_Reduction)/(Wheel_Diameter * 3.1415);
         return (int)(distance * Counts_Per_Inch);
     }
-    public void pivot(double power, double distance) {
+    public void moveArm(double power, double distance) {
         int newTarget = ArmMotor.getCurrentPosition() + (int)(getNewPosition(distance));
 
         ArmMotor.setTargetPosition(newTarget);
