@@ -1,3 +1,5 @@
+//Leilanie
+
 package org.firstinspires.ftc.teamcode.Subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -59,6 +61,9 @@ public class ArmMotor {
         ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         ArmMotor.setPower(0.1);
         ArmMotor.setPower(0.1);
+    }
+    public int getCurrentPosition() {
+        return ArmMotor.getCurrentPosition();
     }
 
 }

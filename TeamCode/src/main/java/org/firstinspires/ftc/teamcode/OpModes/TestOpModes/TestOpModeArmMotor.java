@@ -1,3 +1,5 @@
+//Leilanie
+
 package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -27,6 +29,9 @@ public class TestOpModeArmMotor extends OpMode {
             myRobot.arm.moveArm(10);
             while (myRobot.arm.ArmMotor.isBusy()) {}
             myRobot.armStop();
+
+            telemetry.addData("Status", "Running");
+            telemetry.update();
 
         }
     }
