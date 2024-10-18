@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
-
+import org.firstinspires.ftc.teamcode.Subsystems.ArmMotor;
 @Autonomous(name="AutoParkRight", group="Autonomous")
 public class AutoParkRight extends LinearOpMode {
 
@@ -20,7 +20,7 @@ public class AutoParkRight extends LinearOpMode {
 @Override
 public void runOpMode(){
     params = new RobotParametersPT();
-    myRobot = new Robot(params,hardwareMap,true,false,false, false);
+    myRobot = new Robot(params,hardwareMap,true,false,true, true);
     telemetry.addData("Status", "Initialized");
     telemetry.update();
 
@@ -37,7 +37,13 @@ public void runOpMode(){
     while (opModeIsActive()){
             //myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
             //sleep(1500);
-        myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 41.0);
+        myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 24);
+        while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
+        myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 20);
+        while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
+        myRobot.driveTrain.turnRightByGyro(90,20);
+        while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
+        myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 44.0);
         while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
         myRobot.driveTrain.stop();
         break;
