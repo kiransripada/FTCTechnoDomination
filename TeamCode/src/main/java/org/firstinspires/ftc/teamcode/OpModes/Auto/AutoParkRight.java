@@ -40,7 +40,9 @@ public void runOpMode(){
         myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 24);
         while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
         myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 20);
+        while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
         myRobot.driveTrain.turnRightByGyro(90,20);
+        while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
         myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 44.0);
         while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
         myRobot.driveTrain.stop();
