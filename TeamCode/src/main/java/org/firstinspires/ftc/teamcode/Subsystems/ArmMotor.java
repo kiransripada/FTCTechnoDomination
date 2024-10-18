@@ -46,7 +46,7 @@ public class ArmMotor {
         }
 
     public int getNewPosition(double distance) {
-        double Counts_Per_Motor_Rev = params.Counts_Per_Motor_Rev;
+        double Counts_Per_Motor_Rev = params.Counts_Per_Motor_Arm;
         double Drive_Gear_Reduction = params.Drive_Gear_Reduction;
         double Wheel_Diameter = params.Wheel_Diameter;
         double Counts_Per_Inch = (Counts_Per_Motor_Rev * Drive_Gear_Reduction)/(Wheel_Diameter * 3.1415);
