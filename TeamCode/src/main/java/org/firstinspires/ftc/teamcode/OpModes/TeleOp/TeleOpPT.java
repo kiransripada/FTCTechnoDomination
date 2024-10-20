@@ -30,7 +30,7 @@ public class TeleOpPT extends OpMode {
 
         myRobot.teleopDrive(drive,strafe,rotate);
 
-        // Intake control
+        // clawl control
         if (gamepad2.dpad_left) {
             myRobot.claw.turnIn(1);
         } else if (gamepad2.b) {
@@ -48,11 +48,11 @@ public class TeleOpPT extends OpMode {
         }
         //Arm control
         if (gamepad1.right_bumper) {
-            myRobot.armPivotUp();
+            myRobot.arm.pivotUp(.75);
         } else if (gamepad1.left_bumper) {
-            myRobot.armPivotDown();
+            myRobot.arm.pivotDown(.75);
         } else {
-            myRobot.armStop();
+            myRobot.arm.stop();
         }
 
         // Send telemetry data

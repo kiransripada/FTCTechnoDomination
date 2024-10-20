@@ -18,6 +18,8 @@ public class ArmMotor {
         ArmMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         ArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        ArmMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
     }
         public void stateUpdate (RobotParametersPT.ArmState armState,double power){
             switch (armState) {
@@ -36,10 +38,14 @@ public class ArmMotor {
         }
 
         public void pivotUp (double power){
+            ArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            ArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             ArmMotor.setPower(power);
         }
 
         public void pivotDown (double power){
+            ArmMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            ArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             ArmMotor.setPower(-power);
         }
 
@@ -57,10 +63,10 @@ public class ArmMotor {
     public void moveArm(double distance) {
         int newTarget = ArmMotor.getCurrentPosition() + (int) getNewPosition(distance);
 
-        ArmMotor.setTargetPosition(newTarget);
+        ArmMotor.setTargetPosition((int)distance);
         ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        ArmMotor.setPower(0.1);
-        ArmMotor.setPower(0.1);
+        ArmMotor.setPower(-.75);
+
     }
     public int getCurrentPosition() {
         return ArmMotor.getCurrentPosition();

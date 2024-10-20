@@ -24,16 +24,34 @@ public class TestOpModeArmMotor extends OpMode {
     @Override
     public void loop(){
 
+
+
         //Slide control
         if (gamepad2.a) {
-            myRobot.arm.moveArm(10);
-            while (myRobot.arm.ArmMotor.isBusy()) {}
-            myRobot.armStop();
-
-            telemetry.addData("Status", "Running");
+            telemetry.addData("Arm Position", myRobot.arm.getCurrentPosition());
             telemetry.update();
 
+            myRobot.arm.moveArm(125);
+            telemetry.addData("Arm Position", myRobot.arm.getCurrentPosition());
+            telemetry.update();
+            while (myRobot.arm.ArmMotor.isBusy()) {
+                telemetry.addData("Arm Position", myRobot.arm.getCurrentPosition());
+                telemetry.update();
+
+            }
+            myRobot.arm.stop();
+
+            telemetry.addData("Arm Position", myRobot.arm.getCurrentPosition());
+            telemetry.update();
+
+
         }
+
+        if (gamepad2.b){
+            myRobot.arm.stop();
+        }
+
+
     }
 
 }
