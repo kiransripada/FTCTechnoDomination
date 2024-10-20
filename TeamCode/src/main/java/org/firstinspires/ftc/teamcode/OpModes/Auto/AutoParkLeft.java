@@ -53,17 +53,17 @@ public class AutoParkLeft extends LinearOpMode {
             myRobot.driveTrain.stop();
             sleep(1000);
 */
-            telemetry.addData("Arm Position 1", myRobot.arm.getCurrentPosition());
+            telemetry.addData("Arm Position #1", myRobot.arm.getCurrentPosition());
             telemetry.update();
 
             myRobot.arm.moveArm(75);
-            while (myRobot.arm.ArmMotor.isBusy()) {
-                telemetry.addData("Arm Position 2", myRobot.arm.getCurrentPosition());
+            while (myRobot.arm.ArmMotor1.isBusy()) {
+                telemetry.addData("Arm Position #2", myRobot.arm.getCurrentPosition());
                 telemetry.update();}
             myRobot.driveTrain.stop();
             sleep(1000);
 
-            telemetry.addData("Arm Position 3", myRobot.arm.getCurrentPosition());
+            telemetry.addData("Arm Position #3", myRobot.arm.getCurrentPosition());
             telemetry.update();
 
             break;

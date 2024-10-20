@@ -34,7 +34,7 @@ public class TestOpModeArmMotor extends OpMode {
             myRobot.arm.moveArm(125);
             telemetry.addData("Arm Position", myRobot.arm.getCurrentPosition());
             telemetry.update();
-            while (myRobot.arm.ArmMotor.isBusy()) {
+            while (myRobot.arm.ArmMotor1.isBusy()) {
                 telemetry.addData("Arm Position", myRobot.arm.getCurrentPosition());
                 telemetry.update();
 

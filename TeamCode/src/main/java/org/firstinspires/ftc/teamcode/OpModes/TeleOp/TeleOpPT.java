@@ -39,17 +39,17 @@ public class TeleOpPT extends OpMode {
             myRobot.clawStop();
         }
         //Slide control
-        if (gamepad2.right_bumper) {
+        if (gamepad2.y) {
             myRobot.slidePullIn();
-        } else if (gamepad2.left_bumper) {
+        } else if (gamepad2.a) {
             myRobot.slidePushOut();
         } else {
             myRobot.slideStop();
         }
         //Arm control
-        if (gamepad1.right_bumper) {
+        if (gamepad2.right_bumper) {
             myRobot.arm.pivotUp(.75);
-        } else if (gamepad1.left_bumper) {
+        } else if (gamepad2.left_bumper) {
             myRobot.arm.pivotDown(.75);
         } else {
             myRobot.arm.stop();

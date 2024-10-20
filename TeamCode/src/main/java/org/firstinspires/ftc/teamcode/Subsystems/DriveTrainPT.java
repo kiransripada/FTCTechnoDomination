@@ -55,10 +55,10 @@ public class DriveTrainPT {
     public void drive(double drive, double strafe, double rotate) {
         FrontLeftDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FrontRightDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        double frontLeftPower = drive + strafe + rotate;
-        double frontRightPower = drive - strafe - rotate;
-        double backLeftPower = drive - strafe + rotate;
-        double backRightPower = drive + strafe - rotate;
+        double frontLeftPower = -(drive + strafe + rotate);
+        double frontRightPower = -(drive - strafe - rotate);
+        double backLeftPower = -(drive - strafe + rotate);
+        double backRightPower = -(drive + strafe - rotate);
 
         FrontLeftDCMotor.setPower(frontLeftPower);
         FrontRightDCMotor.setPower(frontRightPower);
