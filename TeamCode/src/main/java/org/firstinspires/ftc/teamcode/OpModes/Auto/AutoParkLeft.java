@@ -1,3 +1,5 @@
+//Leilanie
+
 package org.firstinspires.ftc.teamcode.OpModes.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -53,17 +55,24 @@ public class AutoParkLeft extends LinearOpMode {
             myRobot.driveTrain.stop();
             sleep(1000);
 */
-            telemetry.addData("Arm Position #1", myRobot.arm.getCurrentPosition());
+            telemetry.addData("Arm Position #1", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1));
+            telemetry.update();
+            telemetry.addData("Arm Position #2", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor2));
             telemetry.update();
 
             myRobot.arm.moveArm(75);
             while (myRobot.arm.ArmMotor1.isBusy()) {
-                telemetry.addData("Arm Position #2", myRobot.arm.getCurrentPosition());
-                telemetry.update();}
+                telemetry.addData("Arm Position #1", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1));
+                telemetry.update();
+                telemetry.addData("Arm Position #2", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor2));
+                telemetry.update();
+            }
             myRobot.driveTrain.stop();
             sleep(1000);
 
-            telemetry.addData("Arm Position #3", myRobot.arm.getCurrentPosition());
+            telemetry.addData("Arm Position #1", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1));
+            telemetry.update();
+            telemetry.addData("Arm Position #2", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor2));
             telemetry.update();
 
             break;

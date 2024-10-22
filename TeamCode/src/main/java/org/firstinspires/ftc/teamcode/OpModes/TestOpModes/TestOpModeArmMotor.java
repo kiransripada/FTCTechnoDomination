@@ -28,29 +28,53 @@ public class TestOpModeArmMotor extends OpMode {
 
         //Slide control
         if (gamepad2.a) {
-            telemetry.addData("Arm Position", myRobot.arm.getCurrentPosition());
+            telemetry.addData("Arm Position #1", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1));
+            telemetry.addData("Arm Position #2", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor2));
+            telemetry.update();
+            //Move arm
+            myRobot.arm.moveArm(-10);
+
+            telemetry.addData("Arm Position #1", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1));
+            telemetry.addData("Arm Position #2", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor2));
             telemetry.update();
 
-            myRobot.arm.moveArm(125);
-            telemetry.addData("Arm Position", myRobot.arm.getCurrentPosition());
-            telemetry.update();
-            while (myRobot.arm.ArmMotor1.isBusy()) {
-                telemetry.addData("Arm Position", myRobot.arm.getCurrentPosition());
+            while (myRobot.arm.ArmMotor1.isBusy() || myRobot.arm.ArmMotor2.isBusy()) {
+                telemetry.addData("Arm Position #1", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1));
+                telemetry.addData("Arm Position #2", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor2));
                 telemetry.update();
-
             }
-            myRobot.arm.stop();
 
-            telemetry.addData("Arm Position", myRobot.arm.getCurrentPosition());
+            telemetry.addData("Arm Position #1", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1));
+            telemetry.addData("Arm Position #2", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor2));
             telemetry.update();
 
 
+        } else {
+            myRobot.arm.holdArm(0.2);
         }
 
         if (gamepad2.b){
             myRobot.arm.stop();
         }
 
+/*        if (gamepad2.dpad_down) {
+            //Starting position
+            telemetry.addData("Arm Position #1", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1));
+            telemetry.update();
+            telemetry.addData("Arm Position #2", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor2));
+            telemetry.update();
+
+            //Moving with power 0.1
+            myRobot.arm.noEncoderMovement(0.1);
+
+            //Ending position
+            telemetry.addData("Arm Position #1", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1));
+            telemetry.update();
+            telemetry.addData("Arm Position #2", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor2));
+            telemetry.update();
+
+        }
+*/
 
     }
 
