@@ -49,8 +49,6 @@ public class TestOpModeArmMotor extends OpMode {
             telemetry.update();
 
 
-        } else {
-            myRobot.arm.holdArm(0.2);
         }
 
         if (gamepad2.b){
