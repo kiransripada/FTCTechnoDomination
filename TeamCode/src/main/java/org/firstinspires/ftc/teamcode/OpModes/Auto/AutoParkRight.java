@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.OpModes.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
@@ -10,7 +11,6 @@ import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 import org.firstinspires.ftc.teamcode.Subsystems.ArmMotor;
 @Autonomous(name="AutoParkRight", group="Autonomous")
 public class AutoParkRight extends LinearOpMode {
-
 
     private RobotParametersPT params;
     private Robot myRobot;
@@ -20,7 +20,7 @@ public class AutoParkRight extends LinearOpMode {
 @Override
 public void runOpMode(){
     params = new RobotParametersPT();
-    myRobot = new Robot(params,hardwareMap,true,false,true, true);
+    myRobot = new Robot(params,hardwareMap,true,false,false, false);
     telemetry.addData("Status", "Initialized");
     telemetry.update();
 
@@ -37,13 +37,21 @@ public void runOpMode(){
     while (opModeIsActive()){
             //myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
             //sleep(1500);
-        myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 24);
+        myRobot.driveTrain.driveStraight(0.25, 23);
         while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
-        myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 20);
+        myRobot.driveTrain.stop();
+        sleep(2000);
+        myRobot.driveTrain.driveStraight(0.25, -19);
         while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
-        myRobot.driveTrain.turnRightByGyro(90,20);
+        //myRobot.driveTrain.stop();
+        //sleep(5000);
+        //telemetry.addData("Status", "");
+        //telemetry.update();
+        myRobot.driveTrain.turnRightByGyro(90, 0.25);
         while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
-        myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 44.0);
+        myRobot.driveTrain.stop();
+        sleep(2000);
+        myRobot.driveTrain.driveStraight(0.25, 40.0);
         while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
         myRobot.driveTrain.stop();
         break;

@@ -17,9 +17,9 @@ public final class RobotParametersPT{
 
     public static final double powerReduction = 0.75;
     public static final double Counts_Per_Motor_Arm = 537.7;
-    public static final double Counts_Per_Motor_Wheel = 537.7;
+    public static final double Counts_Per_Motor_Wheel = 384.5; //384.5 for 435, 537.7 for 312
     public static final double Drive_Gear_Reduction = 1.0;
-    public static final double Wheel_Diameter = 96;
+    public static final double Wheel_Diameter = 3.78;
     public static final double Arm_Diameter = 30;
     public double Counts_Per_Motor_Rev;
 

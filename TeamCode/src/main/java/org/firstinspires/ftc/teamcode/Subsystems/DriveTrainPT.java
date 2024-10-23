@@ -30,15 +30,15 @@ public class DriveTrainPT {
         BackRightDCMotor = hardwareMap.get(DcMotor.class, params.backRightMotorName);
 
         // Set motor directions
-        FrontLeftDCMotor.setDirection(DcMotor.Direction.FORWARD);
-        FrontRightDCMotor.setDirection(DcMotor.Direction.REVERSE);
-        BackLeftDCMotor.setDirection(DcMotor.Direction.FORWARD);
-        BackRightDCMotor.setDirection(DcMotor.Direction.REVERSE);
+        FrontLeftDCMotor.setDirection(DcMotor.Direction.REVERSE);
+        FrontRightDCMotor.setDirection(DcMotor.Direction.FORWARD);
+        BackLeftDCMotor.setDirection(DcMotor.Direction.REVERSE);
+        BackRightDCMotor.setDirection(DcMotor.Direction.FORWARD);
         FrontLeftDCMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         FrontLeftDCMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         imu = hardwareMap.get(IMU.class, "imu");
-        imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.LEFT)));
+        imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD)));
 
         FrontRightDCMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         FrontRightDCMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -103,7 +103,7 @@ public class DriveTrainPT {
     public void turnRightByGyro(double angle, double power) {
         while (angle < getYaw()) {
             FrontLeftDCMotor.setPower(power);
-            FrontRightDCMotor.setPower(power * -0.75);
+            FrontRightDCMotor.setPower(power*-0.75);
             BackLeftDCMotor.setPower(power);
             BackRightDCMotor.setPower(power * -0.75);
             //sleep(2000);
