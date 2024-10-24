@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
@@ -12,6 +13,12 @@ public class ArmMotor {
     private RobotParametersPT params;
     public DcMotorEx ArmMotor1;
     public DcMotorEx ArmMotor2;
+    public static final double NEW_P = 15;
+    public static final double NEW_I = .8;
+    public static final double NEW_D = 0.5;
+    public static final double NEW_F = 3;
+    PIDFCoefficients pidfOrig = new PIDFCoefficients();
+    PIDFCoefficients pidfModified = new PIDFCoefficients();
 
 
 
@@ -77,7 +84,28 @@ public class ArmMotor {
         //double Counts_Per_Inch_Arm = (Counts_Per_Motor_Arm * Drive_Gear_Reduction)/(Arm_Diameter * 3.1415);
         return (int)(distance);
     }
+
     public void moveArm(double distance) {
+
+        pidfOrig = ArmMotor1.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // Change coefficients using methods included with DcMotorEx class.
+        PIDFCoefficients pidfNew = new PIDFCoefficients(NEW_P, NEW_I, NEW_D, NEW_F);
+
+        ArmMotor1.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfNew);
+
+        // Re-read coefficients and verify change.
+        pidfModified = ArmMotor1.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        int newTarget1 =  (int) getNewPosition(distance);
+
+        ArmMotor1.setTargetPosition((int)distance);
+        ArmMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        ArmMotor1.setPower(0.5);
+
+    }
+
+    public void moveArmNotUsed(double distance) {
         ArmMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         ArmMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         ArmMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -105,6 +133,20 @@ public class ArmMotor {
     public int getCurrentPosition(DcMotor ArmMotor) {
         return ArmMotor.getCurrentPosition();
     }
+
+    public String getTelemetry(){
+        String telemetry = "";
+        telemetry = telemetry + "Arm1 position - " + getCurrentPosition(ArmMotor1) + " ";
+        telemetry = telemetry + "P,I,D,F (orig)"+ "%.04f, %.04f, %.04f, %.04f";
+        telemetry = telemetry + pidfOrig.p + " " + pidfOrig.i + " " + pidfOrig.d + " " + pidfOrig.f + " ";
+
+        telemetry = telemetry + "P,I,D,F (modified)"+ "%.04f, %.04f, %.04f, %.04f";
+        telemetry = telemetry + pidfModified.p + " " + pidfModified.i + " " + pidfModified.d + " " + pidfModified.f + " ";
+
+
+        return telemetry;
+    }
+
     public void holdArm(double power) {
         ArmMotor1.setPower(power);
         ArmMotor2.setPower(power);

@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
-import org.firstinspires.ftc.teamcode.Subsystems.ArmMotor;
 
 @TeleOp(name="TeleOpPT", group="TeleOp")
 public class TeleOpPT extends OpMode {
@@ -28,37 +27,67 @@ public class TeleOpPT extends OpMode {
         double strafe = gamepad1.left_stick_x * params.powerReduction;
         double rotate = gamepad1.right_stick_x * params.powerReduction;
 
-        myRobot.teleopDrive(drive,strafe,rotate);
+        myRobot.driveTrain.drive(drive,strafe,rotate);
 
-        // clawl control
-        if (gamepad2.dpad_left) {
+        // Intake control
+        if (gamepad2.left_bumper) {
             myRobot.claw.turnIn(1);
-        } else if (gamepad2.b) {
+        } else if (gamepad2.right_bumper) {
             myRobot.claw.turnOut(1);
         } else {
             myRobot.clawStop();
         }
         //Slide control
-        if (gamepad2.y) {
+        if (gamepad1.right_bumper) {
             myRobot.slidePullIn();
-        } else if (gamepad2.a) {
+        } else if (gamepad1.left_bumper) {
             myRobot.slidePushOut();
         } else {
             myRobot.slideStop();
-        }
-        //Arm control
-        if (gamepad2.right_bumper) {
-            myRobot.arm.pivotUp(.75);
-        } else if (gamepad2.left_bumper) {
-            myRobot.arm.pivotDown(.75);
-        } else {
-            myRobot.arm.stop();
         }
 
         // Send telemetry data
         telemetry.addData("Status", "Running");
         telemetry.addData("Drive", "drive (%.2f), strafe (%.2f), rotate (%.2f)", drive, strafe, rotate);
         telemetry.update();
+
+        if (gamepad2.y) {
+            telemetry.addData("start 1", myRobot.arm.getTelemetry());
+            telemetry.update();
+            myRobot.arm.moveArm(-125);
+            while (myRobot.arm.ArmMotor1.isBusy()) {
+                telemetry.addData("start 2", myRobot.arm.getTelemetry());
+                telemetry.update();
+            }
+
+            telemetry.addData("start ", myRobot.arm.getTelemetry());
+            telemetry.update();
+        }
+
+        if (gamepad2.b) {
+            telemetry.addData("start 1", myRobot.arm.getTelemetry());
+            telemetry.update();
+            myRobot.arm.moveArm(-25);
+            while (myRobot.arm.ArmMotor1.isBusy()) {
+                telemetry.addData("start 2", myRobot.arm.getTelemetry());
+                telemetry.update();
+            }
+
+            telemetry.addData("start ", myRobot.arm.getTelemetry());
+            telemetry.update();
+        }
+        if (gamepad2.a) {
+            telemetry.addData("start 1", myRobot.arm.getTelemetry());
+            telemetry.update();
+            myRobot.arm.moveArm(0);
+            while (myRobot.arm.ArmMotor1.isBusy()) {
+                telemetry.addData("start 2", myRobot.arm.getTelemetry());
+                telemetry.update();
+            }
+
+            telemetry.addData("start ", myRobot.arm.getTelemetry());
+            telemetry.update();
+        }
 
     }
 }
