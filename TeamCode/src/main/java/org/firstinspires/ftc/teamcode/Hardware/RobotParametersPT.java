@@ -9,15 +9,17 @@ public final class RobotParametersPT{
     public static final String slideMotorName2 = "SlideMotor2";
     public static final String ClawServoName1 = "ClawServo1";
     public static final String ClawServoName2 = "ClawServo2";
-    public static final String armMotorName = "ArmMotor";
+    public static final String armMotorName1 = "ArmMotor1";
+    public static final String armMotorName2 = "ArmMotor2";
     public static final double defaultArmPower = 0.75;
     public static final double defaultDrivePower = 0.5;
     public static final double defaultSlidePower = 0.75;
     public static final double defaultClawPower = 0.75;
+    public static final double defaultTurnPower = 0.25;
 
     public static final double powerReduction = 0.75;
     public static final double Counts_Per_Motor_Arm = 537.7;
-    public static final double Counts_Per_Motor_Wheel = 384.5; //384.5 for 435, 537.7 for 312
+    public static final double Counts_Per_Motor_Wheel = 384.5;
     public static final double Drive_Gear_Reduction = 1.0;
     public static final double Wheel_Diameter = 3.78;
     public static final double Arm_Diameter = 30;

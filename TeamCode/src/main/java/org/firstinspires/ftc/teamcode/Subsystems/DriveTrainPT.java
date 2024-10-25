@@ -1,3 +1,5 @@
+//Leilanie
+
 package org.firstinspires.ftc.teamcode.Subsystems;
 
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
@@ -40,6 +42,8 @@ public class DriveTrainPT {
         imu = hardwareMap.get(IMU.class, "imu");
         imu.initialize(new IMU.Parameters(new RevHubOrientationOnRobot(RevHubOrientationOnRobot.LogoFacingDirection.UP, RevHubOrientationOnRobot.UsbFacingDirection.FORWARD)));
 
+        imu.resetYaw();
+
         FrontRightDCMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         FrontRightDCMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -53,10 +57,10 @@ public class DriveTrainPT {
     public void drive(double drive, double strafe, double rotate) {
         FrontLeftDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FrontRightDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        double frontLeftPower = drive + strafe + rotate;
-        double frontRightPower = drive - strafe - rotate;
-        double backLeftPower = drive - strafe + rotate;
-        double backRightPower = drive + strafe - rotate;
+        double frontLeftPower = (drive + strafe + rotate);
+        double frontRightPower = (drive - strafe - rotate);
+        double backLeftPower = (drive - strafe + rotate);
+        double backRightPower = (drive + strafe - rotate);
 
         FrontLeftDCMotor.setPower(frontLeftPower);
         FrontRightDCMotor.setPower(frontRightPower);
@@ -101,11 +105,15 @@ public class DriveTrainPT {
     }
 
     public void turnRightByGyro(double angle, double power) {
-        while (angle < getYaw()) {
+        //Its important to run without encoder bc encoders doesnt work on turning
+        FrontLeftDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        FrontRightDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        while (angle > getYaw()) {
             FrontLeftDCMotor.setPower(power);
-            FrontRightDCMotor.setPower(power*-0.75);
+            FrontRightDCMotor.setPower(-power * 0.75);
             BackLeftDCMotor.setPower(power);
-            BackRightDCMotor.setPower(power * -0.75);
+            BackRightDCMotor.setPower(-power * 0.75);
             //sleep(2000);
         }
     }

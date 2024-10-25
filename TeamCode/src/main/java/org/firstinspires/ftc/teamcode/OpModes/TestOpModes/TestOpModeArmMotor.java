@@ -1,3 +1,5 @@
+//Leilanie
+
 package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -22,13 +24,32 @@ public class TestOpModeArmMotor extends OpMode {
     @Override
     public void loop(){
 
-        //Slide control
-        if (gamepad2.a) {
-            myRobot.arm.moveArm(10);
-            while (myRobot.arm.ArmMotor.isBusy()) {}
-            myRobot.armStop();
+        if (gamepad2.y) {
+            telemetry.addData("start 1", myRobot.arm.getTelemetry());
+            telemetry.update();
+            myRobot.arm.moveArm(125);
+            while (myRobot.arm.ArmMotor1.isBusy()) {
+                telemetry.addData("start 2", myRobot.arm.getTelemetry());
+                telemetry.update();
+            }
 
+            telemetry.addData("start ", myRobot.arm.getTelemetry());
+            telemetry.update();
         }
+
+        if (gamepad2.a) {
+            telemetry.addData("start 1", myRobot.arm.getTelemetry());
+            telemetry.update();
+            myRobot.arm.moveArm(25);
+            while (myRobot.arm.ArmMotor1.isBusy()) {
+                telemetry.addData("start 2", myRobot.arm.getTelemetry());
+                telemetry.update();
+            }
+
+            telemetry.addData("start ", myRobot.arm.getTelemetry());
+            telemetry.update();
+        }
+
     }
 
 }

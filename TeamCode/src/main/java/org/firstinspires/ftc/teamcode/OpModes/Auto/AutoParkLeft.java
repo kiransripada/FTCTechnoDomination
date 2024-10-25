@@ -1,3 +1,5 @@
+//Leilanie
+
 package org.firstinspires.ftc.teamcode.OpModes.Auto;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -19,7 +21,7 @@ public class AutoParkLeft extends LinearOpMode {
     @Override
     public void runOpMode(){
         params = new RobotParametersPT();
-        myRobot = new Robot(params,hardwareMap,true,false, false, false);
+        myRobot = new Robot(params,hardwareMap,true,false, false, true);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -38,12 +40,12 @@ public class AutoParkLeft extends LinearOpMode {
             //sleep(1500);
 
             //Go forward 41 in
-            myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 41.0);
+/*            myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 41.0);
             while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
             myRobot.driveTrain.stop();
             sleep(1000);
-            //Turn right to angle 90, using gyro
-            myRobot.driveTrain.turnRightByGyro(90, params.defaultDrivePower*params.powerReduction);
+*/            //Turn right to angle 90, using gyro
+/*            myRobot.driveTrain.turnRightByGyro(90, params.defaultDrivePower*params.powerReduction);
             while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
             myRobot.driveTrain.stop();
             sleep(1000);
@@ -52,7 +54,26 @@ public class AutoParkLeft extends LinearOpMode {
             while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
             myRobot.driveTrain.stop();
             sleep(1000);
+*/
+            telemetry.addData("Arm Position #1", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1));
+            telemetry.update();
+            telemetry.addData("Arm Position #2", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor2));
+            telemetry.update();
 
+            myRobot.arm.moveArm(75);
+            while (myRobot.arm.ArmMotor1.isBusy()) {
+                telemetry.addData("Arm Position #1", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1));
+                telemetry.update();
+                telemetry.addData("Arm Position #2", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor2));
+                telemetry.update();
+            }
+            myRobot.driveTrain.stop();
+            sleep(1000);
+
+            telemetry.addData("Arm Position #1", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1));
+            telemetry.update();
+            telemetry.addData("Arm Position #2", myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor2));
+            telemetry.update();
 
             break;
 

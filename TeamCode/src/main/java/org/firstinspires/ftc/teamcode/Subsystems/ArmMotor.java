@@ -1,20 +1,39 @@
+//Leilanie
+
 package org.firstinspires.ftc.teamcode.Subsystems;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
 public class ArmMotor {
     private RobotParametersPT params;
-    public DcMotor ArmMotor;
+    public DcMotorEx ArmMotor1;
+    public DcMotorEx ArmMotor2;
+    public static final double NEW_P = 15;
+    public static final double NEW_I = .8;
+    public static final double NEW_D = 0.5;
+    public static final double NEW_F = 3;
+    PIDFCoefficients pidfOrig = new PIDFCoefficients();
+    PIDFCoefficients pidfModified = new PIDFCoefficients();
 
 
 
     public ArmMotor(RobotParametersPT params, HardwareMap hardwareMap) {
-        ArmMotor = hardwareMap.get(DcMotor.class, params.armMotorName);
+        ArmMotor1 = hardwareMap.get(DcMotorEx.class, params.armMotorName1);
+        ArmMotor2 = hardwareMap.get(DcMotorEx.class, params.armMotorName2);
 
-        ArmMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        ArmMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ArmMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ArmMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ArmMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ArmMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        ArmMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        ArmMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
 
     }
         public void stateUpdate (RobotParametersPT.ArmState armState,double power){
@@ -34,31 +53,126 @@ public class ArmMotor {
         }
 
         public void pivotUp (double power){
-            ArmMotor.setPower(power);
+            ArmMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            ArmMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            ArmMotor1.setPower(power);
+
+            ArmMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            ArmMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            ArmMotor2.setPower(power);
         }
 
         public void pivotDown (double power){
-            ArmMotor.setPower(-power);
+            ArmMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            ArmMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            ArmMotor1.setPower(-power);
+
+            ArmMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            ArmMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            ArmMotor2.setPower(-power);
         }
 
         public void stop () {
-            ArmMotor.setPower(0);
+            ArmMotor1.setPower(0);
+            ArmMotor2.setPower(0);
         }
 
     public int getNewPosition(double distance) {
         double Counts_Per_Motor_Arm = params.Counts_Per_Motor_Arm;
         double Drive_Gear_Reduction = params.Drive_Gear_Reduction;
         double Arm_Diameter = params.Arm_Diameter;
-       // double Counts_Per_Inch_Arm = (Counts_Per_Motor_Arm * Drive_Gear_Reduction)/(Arm_Diameter * 3.1415);
+        //double Counts_Per_Inch_Arm = (Counts_Per_Motor_Arm * Drive_Gear_Reduction)/(Arm_Diameter * 3.1415);
         return (int)(distance);
     }
-    public void moveArm(double distance) {
-        int newTarget = ArmMotor.getCurrentPosition() + (int) getNewPosition(distance);
 
-        ArmMotor.setTargetPosition(newTarget);
-        ArmMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        ArmMotor.setPower(0.1);
-        ArmMotor.setPower(0.1);
+    public void moveArm(double distance) {
+
+        pidfOrig = ArmMotor1.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        // Change coefficients using methods included with DcMotorEx class.
+        PIDFCoefficients pidfNew = new PIDFCoefficients(NEW_P, NEW_I, NEW_D, NEW_F);
+
+        ArmMotor1.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfNew);
+
+        // Re-read coefficients and verify change.
+        pidfModified = ArmMotor1.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+
+        int newTarget1 =  (int) getNewPosition(distance);
+
+        ArmMotor1.setTargetPosition((int)distance);
+        ArmMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        ArmMotor1.setPower(0.5);
+
     }
 
+    public void moveArmNotUsed(double distance) {
+        ArmMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ArmMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ArmMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ArmMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        int newTarget1 = ArmMotor1.getCurrentPosition() + (int) getNewPosition(distance);
+        int newTarget2 = ArmMotor2.getCurrentPosition() + (int) getNewPosition(distance);
+
+        ArmMotor1.setTargetPosition((int)distance);
+        ArmMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        ArmMotor1.setPower(1);
+
+        ArmMotor2.setTargetPosition((int)distance);
+        ArmMotor2.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        ArmMotor2.setPower(1);
+
+ /*       if (ArmMotor1.getCurrentPosition() > getNewPosition(distance)) {
+
+            ArmMotor1.setPower(0);
+            ArmMotor2.setPower(0);
+        }
+*/
+
+    }
+    public int getCurrentPosition(DcMotor ArmMotor) {
+        return ArmMotor.getCurrentPosition();
+    }
+
+    public String getTelemetry(){
+        String telemetry = "";
+        telemetry = telemetry + "Arm1 position - " + getCurrentPosition(ArmMotor1) + " ";
+        telemetry = telemetry + "P,I,D,F (orig)"+ "%.04f, %.04f, %.04f, %.04f";
+        telemetry = telemetry + pidfOrig.p + " " + pidfOrig.i + " " + pidfOrig.d + " " + pidfOrig.f + " ";
+
+        telemetry = telemetry + "P,I,D,F (modified)"+ "%.04f, %.04f, %.04f, %.04f";
+        telemetry = telemetry + pidfModified.p + " " + pidfModified.i + " " + pidfModified.d + " " + pidfModified.f + " ";
+
+
+        return telemetry;
+    }
+
+    public void holdArm(double power) {
+        ArmMotor1.setPower(power);
+        ArmMotor2.setPower(power);
+
+    }
+    public void noEncoderMovement(double power){
+        ArmMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        ArmMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ArmMotor2.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        ArmMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        ArmMotor1.setPower(-power);
+        ArmMotor2.setPower(power);
+
+
+    }
+
+
+
+
+
 }
+
+
+//PIDCoefficients pidOrig = motorExLeft.getPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+//
+//        // change coefficients using methods included with DcMotorEx class.
+//        PIDCoefficients pidNew = new PIDCoefficients(NEW_P, NEW_I, NEW_D);
+//        motorExLeft.setPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidNew);
