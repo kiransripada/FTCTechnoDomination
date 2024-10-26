@@ -79,7 +79,19 @@ public class TeleOpPT extends OpMode {
         if (gamepad2.a) {
             telemetry.addData("start 1", myRobot.arm.getTelemetry());
             telemetry.update();
-            myRobot.arm.moveArm(0);
+            myRobot.arm.moveArm(5);
+            while (myRobot.arm.ArmMotor1.isBusy()) {
+                telemetry.addData("start 2", myRobot.arm.getTelemetry());
+                telemetry.update();
+            }
+
+            telemetry.addData("start ", myRobot.arm.getTelemetry());
+            telemetry.update();
+        }
+        if (gamepad2.x) {
+            telemetry.addData("start 1", myRobot.arm.getTelemetry());
+            telemetry.update();
+            myRobot.arm.moveArm(-15);
             while (myRobot.arm.ArmMotor1.isBusy()) {
                 telemetry.addData("start 2", myRobot.arm.getTelemetry());
                 telemetry.update();

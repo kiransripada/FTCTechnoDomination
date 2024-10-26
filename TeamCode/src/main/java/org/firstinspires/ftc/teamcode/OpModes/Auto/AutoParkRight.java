@@ -36,29 +36,29 @@ public class AutoParkRight extends LinearOpMode {
         phase = 0;
 
         while (opModeIsActive()) {
-            //myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
+            myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
             //sleep(1500);
-/*           myRobot.driveTrain.driveStraight(params.defaultDrivePower * params.powerReduction, 23);
+            myRobot.driveTrain.driveStraight(params.defaultDrivePower * params.powerReduction, 44);
             while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
             myRobot.driveTrain.stop();
-            telemetry.addData("Status", myRobot.driveTrain.getNewPosition(23));
-            telemetry.update();
+            //telemetry.addData("Status", myRobot.driveTrain.getNewPosition(23));
+            //telemetry.update();
 
             //Put Arm Motor code here:
             //Moving up
             //Hang specimin
             //Conitnue w code
 
-            sleep(5000);
-            telemetry.addData("Status", myRobot.driveTrain.getNewPosition(19));
-            telemetry.update();
-            sleep(5000);
-            myRobot.driveTrain.driveStraight(-(params.defaultDrivePower * params.powerReduction), -19);
-            while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
-            myRobot.driveTrain.stop();
-            sleep(5000);
-*/
-            telemetry.addData("Angle", myRobot.driveTrain.getYaw());
+            //sleep(5000);
+            //telemetry.addData("Status", myRobot.driveTrain.getNewPosition(19));
+            //telemetry.update();
+            //sleep(5000);
+            //myRobot.driveTrain.driveStraight(-(params.defaultDrivePower * params.powerReduction), -19);
+            //while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
+            //myRobot.driveTrain.stop();
+            //sleep(5000);
+
+            /*telemetry.addData("Angle", myRobot.driveTrain.getYaw());
             telemetry.update();
             sleep(5000);
             myRobot.driveTrain.turnRightByGyro(180, params.defaultTurnPower * params.powerReduction);
@@ -77,10 +77,10 @@ public class AutoParkRight extends LinearOpMode {
             myRobot.driveTrain.driveStraight(params.defaultDrivePower * params.powerReduction, 44.0);
             while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {
             }
-            myRobot.driveTrain.stop();
+            myRobot.driveTrain.stop();*/
             break;
 
-            */
+
         }
 
     }
