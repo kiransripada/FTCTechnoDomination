@@ -109,7 +109,7 @@ public class DriveTrainPT {
         FrontLeftDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FrontRightDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
-        while (angle > getYaw()) {
+        while (angle < getYaw()) {
             FrontLeftDCMotor.setPower(power);
             FrontRightDCMotor.setPower(-power * 0.75);
             BackLeftDCMotor.setPower(power);

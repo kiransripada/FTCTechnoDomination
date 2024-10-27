@@ -23,6 +23,7 @@ public class AutoParkLeft extends LinearOpMode {
         params = new RobotParametersPT();
         myRobot = new Robot(params,hardwareMap,true,false, false, true);
         telemetry.addData("Status", "Initialized");
+        telemetry.addData("yaw ",myRobot.driveTrain.getYaw());
         telemetry.update();
 
         // Wait for the start button to be pressed
@@ -35,6 +36,10 @@ public class AutoParkLeft extends LinearOpMode {
         runtime.reset();
         phase = 0;
 
+       /* while(opModeIsActive()){
+            telemetry.addData("yaw 1",myRobot.driveTrain.getYaw());
+            telemetry.update();
+        }*/
         while (opModeIsActive()){
             //myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
             //sleep(1500);
@@ -43,15 +48,19 @@ public class AutoParkLeft extends LinearOpMode {
             myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 41.0);
             while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
             myRobot.driveTrain.stop();
-            sleep(1000);
+            sleep(3000);
             //Turn right to angle 90, using gyro
-            myRobot.driveTrain.turnRightByGyro(45, params.defaultDrivePower*params.powerReduction);
-            while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
+            myRobot.driveTrain.turnRightByGyro(-90, params.defaultDrivePower*params.powerReduction);
+            while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {
+                telemetry.addData("yaw 1",myRobot.driveTrain.getYaw());
+                telemetry.update();
+                sleep(500);
+            }
             myRobot.driveTrain.stop();
-            sleep(1000);
+            sleep(3000);
 
             //Go straight just a little bit to make sure its in the space
-            myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 41.0);
+            myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 7.0);
             while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
             myRobot.driveTrain.stop();
             sleep(1000);

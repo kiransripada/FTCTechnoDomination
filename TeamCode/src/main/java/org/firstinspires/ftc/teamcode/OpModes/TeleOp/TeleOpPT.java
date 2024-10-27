@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
@@ -11,6 +12,7 @@ public class TeleOpPT extends OpMode {
 
     private RobotParametersPT params;
     private Robot myRobot;
+    private int cnt = 0;
 
     @Override
     public void init(){
@@ -51,6 +53,9 @@ public class TeleOpPT extends OpMode {
         telemetry.addData("Drive", "drive (%.2f), strafe (%.2f), rotate (%.2f)", drive, strafe, rotate);
         telemetry.update();
 
+        telemetry.addData("start 2", myRobot.arm.getTelemetry());
+        telemetry.update();
+
         if (gamepad2.y) {
             telemetry.addData("start 1", myRobot.arm.getTelemetry());
             telemetry.update();
@@ -65,6 +70,11 @@ public class TeleOpPT extends OpMode {
         }
 
         if (gamepad2.b) {
+            if (cnt == 0){
+                myRobot.arm.ArmMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                myRobot.arm.ArmMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+                cnt++;
+            }
             telemetry.addData("start 1", myRobot.arm.getTelemetry());
             telemetry.update();
             myRobot.arm.moveArm(-25);
@@ -79,7 +89,7 @@ public class TeleOpPT extends OpMode {
         if (gamepad2.a) {
             telemetry.addData("start 1", myRobot.arm.getTelemetry());
             telemetry.update();
-            myRobot.arm.moveArm(5);
+            myRobot.arm.moveArm(-5);
             while (myRobot.arm.ArmMotor1.isBusy()) {
                 telemetry.addData("start 2", myRobot.arm.getTelemetry());
                 telemetry.update();
