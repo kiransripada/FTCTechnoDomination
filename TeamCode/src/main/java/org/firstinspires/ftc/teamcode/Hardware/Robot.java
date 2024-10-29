@@ -50,40 +50,40 @@ public class Robot {
 
     public void slidePullIn(){
 
-        slide.stateUpdate(RobotParametersPT.SlideState.SLIDE_IN,params.defaultSlidePower);
+        slide.stateUpdate(RobotParametersPT.SlideState.SLIDE_IN, RobotParametersPT.defaultSlidePower);
     }
 
     public void slidePushOut(){
 
-        slide.stateUpdate(RobotParametersPT.SlideState.SLIDE_OUT,params.defaultSlidePower);
+        slide.stateUpdate(RobotParametersPT.SlideState.SLIDE_OUT, RobotParametersPT.defaultSlidePower);
     }
 
     public void slideStop(){
 
-        slide.stateUpdate(RobotParametersPT.SlideState.STOP,params.defaultSlidePower);
+        slide.stateUpdate(RobotParametersPT.SlideState.STOP, RobotParametersPT.defaultSlidePower);
     }
 
     public void clawTurnIn(){
-        claw.stateUpdate(RobotParametersPT.ClawState.TURN_IN, params.defaultClawPower);
+        claw.stateUpdate(RobotParametersPT.ClawState.TURN_IN, RobotParametersPT.defaultClawPower);
     }
 
     public void clawTurnOut(){
-        claw.stateUpdate(RobotParametersPT.ClawState.TURN_OUT, params.defaultClawPower);
+        claw.stateUpdate(RobotParametersPT.ClawState.TURN_OUT, RobotParametersPT.defaultClawPower);
     }
 
     public void clawStop(){
-        claw.stateUpdate(RobotParametersPT.ClawState.STOP, params.defaultClawPower);
+        claw.stateUpdate(RobotParametersPT.ClawState.STOP, RobotParametersPT.defaultClawPower);
     }
     public void armPivotUp(){
-        arm.stateUpdate(RobotParametersPT.ArmState.PIVOT_UP, params.defaultArmPower);
+        arm.stateUpdate(RobotParametersPT.ArmState.PIVOT_UP, RobotParametersPT.defaultArmPower);
     }
 
     public void armPivotDown(){
-        arm.stateUpdate(RobotParametersPT.ArmState.PIVOT_DOWN, params.defaultArmPower);
+        arm.stateUpdate(RobotParametersPT.ArmState.PIVOT_DOWN, RobotParametersPT.defaultArmPower);
     }
 
     public void armStop(){
-        arm.stateUpdate(RobotParametersPT.ArmState.STOP, params.defaultArmPower);
+        arm.stateUpdate(RobotParametersPT.ArmState.STOP, RobotParametersPT.defaultArmPower);
     }
 
 

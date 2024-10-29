@@ -8,22 +8,19 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
+import org.firstinspires.ftc.teamcode.OpModes.TeleOp.TeleOpPT;
 
 public class ArmMotor {
     private RobotParametersPT params;
     public DcMotorEx ArmMotor1;
     public DcMotorEx ArmMotor2;
-    public static final double NEW_P = 15;
-    public static final double NEW_I = .8;
-    public static final double NEW_D = 0.5;
-    public static final double NEW_F = 3;
     PIDFCoefficients pidfOrig = new PIDFCoefficients();
     PIDFCoefficients pidfModified = new PIDFCoefficients();
 
 
     public ArmMotor(RobotParametersPT params, HardwareMap hardwareMap) {
-        ArmMotor1 = hardwareMap.get(DcMotorEx.class, params.armMotorName1);
-        ArmMotor2 = hardwareMap.get(DcMotorEx.class, params.armMotorName2);
+        ArmMotor1 = hardwareMap.get(DcMotorEx.class, RobotParametersPT.armMotorName1);
+        ArmMotor2 = hardwareMap.get(DcMotorEx.class, RobotParametersPT.armMotorName2);
 
         ArmMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         ArmMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -77,9 +74,9 @@ public class ArmMotor {
         }
 
     public int getNewPosition(double distance) {
-        double Counts_Per_Motor_Arm = params.Counts_Per_Motor_Arm;
-        double Drive_Gear_Reduction = params.Drive_Gear_Reduction;
-        double Arm_Diameter = params.Arm_Diameter;
+        double Counts_Per_Motor_Arm = RobotParametersPT.Counts_Per_Motor_Arm;
+        double Drive_Gear_Reduction = RobotParametersPT.Drive_Gear_Reduction;
+        double Arm_Diameter = RobotParametersPT.Arm_Diameter;
         //double Counts_Per_Inch_Arm = (Counts_Per_Motor_Arm * Drive_Gear_Reduction)/(Arm_Diameter * 3.1415);
         return (int)(distance);
     }
@@ -89,7 +86,7 @@ public class ArmMotor {
 //        pidfOrig = ArmMotor1.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Change coefficients using methods included with DcMotorEx class.
-        PIDFCoefficients pidfNew = new PIDFCoefficients(NEW_P, NEW_I, NEW_D, NEW_F);
+        PIDFCoefficients pidfNew = new PIDFCoefficients(TeleOpPT.P, TeleOpPT.I, TeleOpPT.D, TeleOpPT.F);
 
         ArmMotor1.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfNew);
 

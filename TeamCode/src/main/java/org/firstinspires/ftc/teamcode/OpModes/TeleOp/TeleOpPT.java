@@ -16,7 +16,6 @@ public class TeleOpPT extends OpMode {
     private RobotParametersPT params;
     private Robot myRobot;
     private int cnt = 0;
-
     public static double P = 0.0, I =0.0, D=0.0, F=0.0;
 
     @Override
