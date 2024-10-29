@@ -21,7 +21,6 @@ public class ArmMotor {
     PIDFCoefficients pidfModified = new PIDFCoefficients();
 
 
-
     public ArmMotor(RobotParametersPT params, HardwareMap hardwareMap) {
         ArmMotor1 = hardwareMap.get(DcMotorEx.class, params.armMotorName1);
         ArmMotor2 = hardwareMap.get(DcMotorEx.class, params.armMotorName2);
@@ -87,7 +86,7 @@ public class ArmMotor {
 
     public void moveArm(double distance) {
 
-        pidfOrig = ArmMotor1.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+//        pidfOrig = ArmMotor1.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Change coefficients using methods included with DcMotorEx class.
         PIDFCoefficients pidfNew = new PIDFCoefficients(NEW_P, NEW_I, NEW_D, NEW_F);

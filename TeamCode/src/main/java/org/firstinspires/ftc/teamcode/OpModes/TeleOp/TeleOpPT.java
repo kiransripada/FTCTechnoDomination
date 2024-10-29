@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -7,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
+@Config
 @TeleOp(name="TeleOpPT", group="TeleOp")
 public class TeleOpPT extends OpMode {
 
@@ -14,8 +17,11 @@ public class TeleOpPT extends OpMode {
     private Robot myRobot;
     private int cnt = 0;
 
+    public static double P = 0.0, I =0.0, D=0.0, F=0.0;
+
     @Override
     public void init(){
+        telemetry = FtcDashboard.getInstance().getTelemetry();
         params = new RobotParametersPT();
         myRobot = new Robot(params, hardwareMap,true,true,true, true);
         telemetry.addData("Status", "Initialized");
