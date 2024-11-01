@@ -2,14 +2,16 @@ package org.firstinspires.ftc.teamcode.OpModes.TeleOp;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
-@Config
+
 @TeleOp(name="TeleOpPT", group="TeleOp")
 public class TeleOpPT extends OpMode {
 
@@ -20,7 +22,7 @@ public class TeleOpPT extends OpMode {
 
     @Override
     public void init(){
-        telemetry = FtcDashboard.getInstance().getTelemetry();
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         params = new RobotParametersPT();
         myRobot = new Robot(params, hardwareMap,true,true,true, true);
         telemetry.addData("Status", "Initialized");
@@ -64,7 +66,7 @@ public class TeleOpPT extends OpMode {
         if (gamepad2.y) {
             telemetry.addData("start 1", myRobot.arm.getTelemetry());
             telemetry.update();
-            myRobot.arm.moveArm(-125);
+            myRobot.arm.moveArm(125);
             while (myRobot.arm.ArmMotor1.isBusy()) {
                 telemetry.addData("start 2", myRobot.arm.getTelemetry());
                 telemetry.update();
@@ -82,7 +84,7 @@ public class TeleOpPT extends OpMode {
             }
             telemetry.addData("start 1", myRobot.arm.getTelemetry());
             telemetry.update();
-            myRobot.arm.moveArm(-25);
+            myRobot.arm.moveArm(25);
             while (myRobot.arm.ArmMotor1.isBusy()) {
                 telemetry.addData("start 2", myRobot.arm.getTelemetry());
                 telemetry.update();
@@ -94,7 +96,7 @@ public class TeleOpPT extends OpMode {
         if (gamepad2.a) {
             telemetry.addData("start 1", myRobot.arm.getTelemetry());
             telemetry.update();
-            myRobot.arm.moveArm(-5);
+            myRobot.arm.moveArm(5);
             while (myRobot.arm.ArmMotor1.isBusy()) {
                 telemetry.addData("start 2", myRobot.arm.getTelemetry());
                 telemetry.update();
@@ -106,7 +108,7 @@ public class TeleOpPT extends OpMode {
         if (gamepad2.x) {
             telemetry.addData("start 1", myRobot.arm.getTelemetry());
             telemetry.update();
-            myRobot.arm.moveArm(-15);
+            myRobot.arm.moveArm(15);
             while (myRobot.arm.ArmMotor1.isBusy()) {
                 telemetry.addData("start 2", myRobot.arm.getTelemetry());
                 telemetry.update();

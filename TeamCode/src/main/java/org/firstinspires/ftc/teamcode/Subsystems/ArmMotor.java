@@ -27,8 +27,11 @@ public class ArmMotor {
         ArmMotor2.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         ArmMotor2.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
+        ArmMotor1.setDirection(DcMotorSimple.Direction.REVERSE);
+
         ArmMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         ArmMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
 
 
     }
@@ -97,7 +100,7 @@ public class ArmMotor {
 
         ArmMotor1.setTargetPosition((int)distance);
         ArmMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        ArmMotor1.setPower(0.5);
+        ArmMotor1.setPower(0.9);
 
     }
 

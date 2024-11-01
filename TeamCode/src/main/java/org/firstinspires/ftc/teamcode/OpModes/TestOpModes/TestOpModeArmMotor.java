@@ -27,7 +27,7 @@ public class TestOpModeArmMotor extends OpMode {
         if (gamepad2.y) {
             telemetry.addData("start 1", myRobot.arm.getTelemetry());
             telemetry.update();
-            myRobot.arm.moveArm(125);
+            myRobot.arm.moveArm(-125);
             while (myRobot.arm.ArmMotor1.isBusy()) {
                 telemetry.addData("start 2", myRobot.arm.getTelemetry());
                 telemetry.update();
@@ -40,7 +40,7 @@ public class TestOpModeArmMotor extends OpMode {
         if (gamepad2.a) {
             telemetry.addData("start 1", myRobot.arm.getTelemetry());
             telemetry.update();
-            myRobot.arm.moveArm(25);
+            myRobot.arm.moveArm(-25);
             while (myRobot.arm.ArmMotor1.isBusy()) {
                 telemetry.addData("start 2", myRobot.arm.getTelemetry());
                 telemetry.update();
