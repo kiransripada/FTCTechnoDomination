@@ -30,41 +30,48 @@ public class TeleOpPT extends OpMode {
 
     @Override
     public void loop() {
+        //telemetry.addData("Status", "In loop");
         // Drivetrain control
-        double drive = -gamepad1.left_stick_y * params.powerReduction;
-        double strafe = gamepad1.left_stick_x * params.powerReduction;
-        double rotate = gamepad1.right_stick_x * params.powerReduction;
+        //double drive = -gamepad1.left_stick_y * params.powerReduction;
+        //double strafe = gamepad1.left_stick_x * params.powerReduction;
+        //double rotate = gamepad1.right_stick_x * params.powerReduction;
 
-        myRobot.driveTrain.drive(drive, strafe, rotate);
+        //myRobot.driveTrain.drive(drive, strafe, rotate);
 
-            // Intake control
-            if (gamepad2.left_bumper) {
-                myRobot.claw.turnIn(1);
-            } else if (gamepad2.right_bumper) {
-                myRobot.claw.turnOut(1);
+        // Intake control
+        if (gamepad2.left_bumper) {
+            myRobot.claw.turnIn(1);
+        } else if (gamepad2.right_bumper) {
+            myRobot.claw.turnOut(1);
             //Slide control
-            if (gamepad1.right_bumper) {
-                myRobot.slidePullIn();
-            } else if (gamepad1.left_bumper) {
-                myRobot.slidePushOut();
-            } else {
-                myRobot.slideStop();
-            }
+        }
 
-            // Send telemetry data
-            telemetry.addData("Status", "Running");
-            telemetry.addData("Drive", "drive (%.2f), strafe (%.2f), rotate (%.2f)", drive, strafe, rotate);
-            telemetry.addData("Claw position ", myRobot.claw.getPosition());
+        if (gamepad1.right_bumper) {
+            myRobot.slide.slideIn(0.5);
+        } else if (gamepad1.left_bumper) {
+            myRobot.slide.slideOut(-0.5);
+        } else {
+            myRobot.slideStop();
+        }
+
+        // Send telemetry data
+       // telemetry.addData("Status", "Running");
+       // telemetry.addData("Drive", "drive (%.2f), strafe (%.2f), rotate (%.2f)");
+       // telemetry.addData("arm pos", myRobot.arm.getTelemetryForArm());
+       // telemetry.update();
+
+
+        if (gamepad2.y) {
+            myRobot.arm.moveArmVersion2(-200);
+
+
+
+
+            telemetry.addData("Arm telemetry", myRobot.arm.getTelemetryForArm());
             telemetry.update();
 
-            telemetry.addData("start 2", myRobot.arm.getTelemetry());
-            telemetry.update();
 
-            if (gamepad2.y) {
-                myRobot.arm.moveArmVersion2(-700);
+        }
 
-                myRobot.arm.getTelemetryForArm();
-                }
-            }
     }
 }

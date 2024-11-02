@@ -1,6 +1,8 @@
 //Leilanie
 
 package org.firstinspires.ftc.teamcode.Subsystems;
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -27,13 +29,21 @@ public class ArmMotor {
     public static double p =0.0180, i=0, d=0.0009;
     public static double f=0.77;
 
-    public static int target = 0;
-    private final double ticks_in_degree = 1425.1/180.0;
+    public static int targetPos = 0;
+    private static double ticks_in_degree = 1425.1/180.0;
     boolean targetReached = false;
 
 
     public ArmMotor(RobotParametersPT params, HardwareMap hardwareMap) {
+        controller = new PIDController(p,i,d);
         ArmMotor1 = hardwareMap.get(DcMotorEx.class, RobotParametersPT.armMotorName1);
+        //ArmMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ArmMotor1.setDirection(DcMotorEx.Direction.REVERSE);
+        ArmMotor1.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
+        //ArmMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        /*ArmMotor1 = hardwareMap.get(DcMotorEx.class, RobotParametersPT.armMotorName1);
         ArmMotor2 = hardwareMap.get(DcMotorEx.class, RobotParametersPT.armMotorName2);
 
         ArmMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -45,7 +55,7 @@ public class ArmMotor {
 
         ArmMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         ArmMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-
+        */
 
 
     }
@@ -156,9 +166,6 @@ public class ArmMotor {
         telemetry = telemetry + "P,I,D,F (modified)"+ "%.04f, %.04f, %.04f, %.04f";
         telemetry = telemetry + pidfModified.p + " " + pidfModified.i + " " + pidfModified.d + " " + pidfModified.f + " ";
 
-
-
-
         return telemetry;
     }
 
@@ -179,42 +186,37 @@ public class ArmMotor {
 
     }
     public void moveArmVersion2(int target) {
+        p =0.0180;
+        i=0;
+        d=0.0009;
+        f=0.77;
+        ticks_in_degree =  1425.1/180.0;
+
         controller.setPID(p, i, d);
         armPos = ArmMotor1.getCurrentPosition();
-        pid = controller.calculate(armPos, target);
-        ff = Math.cos(Math.toRadians(target / ticks_in_degree)) * f;
+        targetPos = target;
+        pid = controller.calculate(armPos, targetPos);
+        ff = Math.cos(Math.toRadians(targetPos / ticks_in_degree)) * f;
 
         power = pid + ff;
+
+
 
         ArmMotor1.setPower(power * .75);
 
     }
     public String getTelemetryForArm(){
 
-
         String telemetry = "";
         telemetry = telemetry + "pos - " + armPos;
         telemetry = telemetry + "pid"+ pid;
         telemetry = telemetry + "ff"+ ff;
         telemetry = telemetry + "power"+ power;
-        telemetry = telemetry + "target"+ target;
-
-        /*telemetry.addData("pos", armPos);
-        telemetry.addData("pid", pid);
-        telemetry.addData("ff", ff);
-        telemetry.addData("power ", power);
-        telemetry.addData("target ", target);
-        telemetry.update(); */
-
+        telemetry = telemetry + "target"+ targetPos;
 
         return telemetry;
     }
-
-
-
 }
-
-
 //PIDCoefficients pidOrig = motorExLeft.getPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
 //
 //        // change coefficients using methods included with DcMotorEx class.
