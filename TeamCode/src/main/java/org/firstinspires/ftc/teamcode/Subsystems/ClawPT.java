@@ -3,16 +3,17 @@ package org.firstinspires.ftc.teamcode.Subsystems;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
 public class ClawPT {
     private RobotParametersPT params;
-    private final CRServo ClawServo1;
+    private final Servo ClawServo1;
     private final CRServo ClawServo2;
 
     public ClawPT(RobotParametersPT params, HardwareMap hardwareMap) {
-        ClawServo1 = hardwareMap.get(CRServo.class, params.ClawServoName1);
+        ClawServo1 = hardwareMap.get(Servo.class, params.ClawServoName1);
         ClawServo2 = hardwareMap.get(CRServo.class, params.ClawServoName2);
     }
 
@@ -34,19 +35,25 @@ public class ClawPT {
 
 
     public void turnIn(double power){
-        ClawServo1.setPower(power);
-        ClawServo2.setPower(-power);
+       // ClawServo1.setPower(power);
+       // ClawServo2.setPower(-power);
+
+        ClawServo1.setPosition(0);
     }
 
     public void turnOut(double power){
-        ClawServo1.setPower(-power);
+        ClawServo1.setPosition(1);
         ClawServo2.setPower(power);
     }
 
     public void stop(){
-        ClawServo1.setPower(0);
+        ClawServo1.setPosition(0.5);
         ClawServo2.setPower(0);
 
+    }
+
+    public double getPosition(){
+        return ClawServo1.getPosition();
     }
 
 }

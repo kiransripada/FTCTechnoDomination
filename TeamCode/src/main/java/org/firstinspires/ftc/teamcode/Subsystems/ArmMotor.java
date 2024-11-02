@@ -1,6 +1,7 @@
 //Leilanie
 
 package org.firstinspires.ftc.teamcode.Subsystems;
+import com.arcrobotics.ftclib.controller.PIDController;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -16,6 +17,19 @@ public class ArmMotor {
     public DcMotorEx ArmMotor2;
     PIDFCoefficients pidfOrig = new PIDFCoefficients();
     PIDFCoefficients pidfModified = new PIDFCoefficients();
+
+    int armPos;
+    double pid;
+    double ff;
+    double power;
+
+    private PIDController controller;
+    public static double p =0.0180, i=0, d=0.0009;
+    public static double f=0.77;
+
+    public static int target = 0;
+    private final double ticks_in_degree = 1425.1/180.0;
+    boolean targetReached = false;
 
 
     public ArmMotor(RobotParametersPT params, HardwareMap hardwareMap) {
@@ -89,7 +103,7 @@ public class ArmMotor {
 //        pidfOrig = ArmMotor1.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Change coefficients using methods included with DcMotorEx class.
-        PIDFCoefficients pidfNew = new PIDFCoefficients(TeleOpPT.P, TeleOpPT.I, TeleOpPT.D, TeleOpPT.F);
+        PIDFCoefficients pidfNew = new PIDFCoefficients(p, i, d, f);
 
         ArmMotor1.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfNew);
 
@@ -143,6 +157,8 @@ public class ArmMotor {
         telemetry = telemetry + pidfModified.p + " " + pidfModified.i + " " + pidfModified.d + " " + pidfModified.f + " ";
 
 
+
+
         return telemetry;
     }
 
@@ -162,8 +178,37 @@ public class ArmMotor {
 
 
     }
+    public void moveArmVersion2(int target) {
+        controller.setPID(p, i, d);
+        armPos = ArmMotor1.getCurrentPosition();
+        pid = controller.calculate(armPos, target);
+        ff = Math.cos(Math.toRadians(target / ticks_in_degree)) * f;
+
+        power = pid + ff;
+
+        ArmMotor1.setPower(power * .75);
+
+    }
+    public String getTelemetryForArm(){
 
 
+        String telemetry = "";
+        telemetry = telemetry + "pos - " + armPos;
+        telemetry = telemetry + "pid"+ pid;
+        telemetry = telemetry + "ff"+ ff;
+        telemetry = telemetry + "power"+ power;
+        telemetry = telemetry + "target"+ target;
+
+        /*telemetry.addData("pos", armPos);
+        telemetry.addData("pid", pid);
+        telemetry.addData("ff", ff);
+        telemetry.addData("power ", power);
+        telemetry.addData("target ", target);
+        telemetry.update(); */
+
+
+        return telemetry;
+    }
 
 
 

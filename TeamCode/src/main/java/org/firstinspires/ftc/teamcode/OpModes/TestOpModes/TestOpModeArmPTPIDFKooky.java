@@ -40,15 +40,16 @@ public class TestOpModeArmPTPIDFKooky extends OpMode {
         telemetry = new MultipleTelemetry(telemetry,FtcDashboard.getInstance().getTelemetry());
 
         ArmMotor1 = hardwareMap.get(DcMotorEx.class, RobotParametersPT.armMotorName1);
-
+        //ArmMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ArmMotor1.setDirection(DcMotorEx.Direction.REVERSE);
+        ArmMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
     }
 
     @Override
     public void loop(){
-
-
             controller.setPID(p, i, d);
+
             int armPos = ArmMotor1.getCurrentPosition();
             double pid = controller.calculate(armPos, target);
             double ff = Math.cos(Math.toRadians(target / ticks_in_degree)) * f;
