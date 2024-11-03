@@ -33,11 +33,13 @@ public class TeleOpPT2 extends OpMode {
 
     @Override
     public void init() {
-        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
-        params = new RobotParametersPT();
-        myRobot = new Robot(params, hardwareMap, true, true, true, true);
-
         controller = new PIDController(p,i,d);
+        telemetry = new MultipleTelemetry(telemetry,FtcDashboard.getInstance().getTelemetry());
+
+        ArmMotor1 = hardwareMap.get(DcMotorEx.class, RobotParametersPT.armMotorName1);
+        //ArmMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ArmMotor1.setDirection(DcMotorEx.Direction.REVERSE);
+        ArmMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -45,6 +47,16 @@ public class TeleOpPT2 extends OpMode {
 
     @Override
     public void loop() {
+
+        if (gamepad2.y) {
+           target = -450;
+        } else if (gamepad2.a) {
+            target = -700;
+        }
+        else if (gamepad2.b) {
+            target = -600;
+        }
+
         controller.setPID(p, i, d);
 
         int armPos = ArmMotor1.getCurrentPosition();
@@ -61,6 +73,8 @@ public class TeleOpPT2 extends OpMode {
         telemetry.addData("power ", power);
         telemetry.addData("target ", target);
         telemetry.update();
+
+
 
     }
 }

@@ -48,6 +48,7 @@ public class TestOpModeArmPTPIDFKooky extends OpMode {
 
     @Override
     public void loop(){
+
             controller.setPID(p, i, d);
 
             int armPos = ArmMotor1.getCurrentPosition();
@@ -64,8 +65,6 @@ public class TestOpModeArmPTPIDFKooky extends OpMode {
             telemetry.addData("power ", power);
             telemetry.addData("target ", target);
             telemetry.update();
-
-
     }
 }
 
