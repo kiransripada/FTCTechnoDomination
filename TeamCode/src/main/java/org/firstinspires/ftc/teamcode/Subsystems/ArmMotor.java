@@ -41,7 +41,10 @@ public class ArmMotor {
         ArmMotor1.setDirection(DcMotorEx.Direction.REVERSE);
         ArmMotor1.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
-        //ArmMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ArmMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ArmMotor1.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
+
+        ArmMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         /*ArmMotor1 = hardwareMap.get(DcMotorEx.class, RobotParametersPT.armMotorName1);
         ArmMotor2 = hardwareMap.get(DcMotorEx.class, RobotParametersPT.armMotorName2);
@@ -192,6 +195,8 @@ public class ArmMotor {
         f=0.77;
         ticks_in_degree =  1425.1/180.0;
 
+
+
         controller.setPID(p, i, d);
         armPos = ArmMotor1.getCurrentPosition();
         targetPos = target;
@@ -208,7 +213,7 @@ public class ArmMotor {
     public String getTelemetryForArm(){
 
         String telemetry = "";
-        telemetry = telemetry + "pos - " + armPos;
+        telemetry = telemetry + "pos - " + ArmMotor1.getCurrentPosition();
         telemetry = telemetry + "pid"+ pid;
         telemetry = telemetry + "ff"+ ff;
         telemetry = telemetry + "power"+ power;
