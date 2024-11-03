@@ -60,8 +60,8 @@ public class TeleOpPT2 extends OpMode {
         controller.setPID(p, i, d);
 
         int armPos = ArmMotor1.getCurrentPosition();
-        double pid = controller.calculate(armPos, -200);
-        double ff = Math.cos(Math.toRadians(-200 / ticks_in_degree)) * f;
+        double pid = controller.calculate(armPos, target);
+        double ff = Math.cos(Math.toRadians(target / ticks_in_degree)) * f;
 
         double power = pid + ff;
 
