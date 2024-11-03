@@ -18,6 +18,7 @@ public class TeleOpPT extends OpMode {
     private RobotParametersPT params;
     private Robot myRobot;
     private int cnt = 0;
+    private int armTargetPos;
 
     @Override
     public void init() {
@@ -30,13 +31,13 @@ public class TeleOpPT extends OpMode {
 
     @Override
     public void loop() {
-        //telemetry.addData("Status", "In loop");
+        telemetry.addData("Status", "In loop");
         // Drivetrain control
-        //double drive = -gamepad1.left_stick_y * params.powerReduction;
-        //double strafe = gamepad1.left_stick_x * params.powerReduction;
-        //double rotate = gamepad1.right_stick_x * params.powerReduction;
+        double drive = -gamepad1.left_stick_y * params.powerReduction;
+        double strafe = gamepad1.left_stick_x * params.powerReduction;
+        double rotate = gamepad1.right_stick_x * params.powerReduction;
 
-        //myRobot.driveTrain.drive(drive, strafe, rotate);
+        myRobot.driveTrain.drive(drive, strafe, rotate);
 
         // Intake control
         if (gamepad2.left_bumper) {
@@ -55,23 +56,25 @@ public class TeleOpPT extends OpMode {
         }
 
         // Send telemetry data
-       // telemetry.addData("Status", "Running");
-       // telemetry.addData("Drive", "drive (%.2f), strafe (%.2f), rotate (%.2f)");
-       // telemetry.addData("arm pos", myRobot.arm.getTelemetryForArm());
-       // telemetry.update();
+        telemetry.addData("Status", "Running");
+        telemetry.addData("Drive", "drive (%.2f), strafe (%.2f), rotate (%.2f)");
+        telemetry.addData("arm pos", myRobot.arm.getTelemetryForArm());
+        telemetry.update();
+
 
 
         if (gamepad2.y) {
-            myRobot.arm.moveArmVersion2(-200);
-
-
-
-
-            telemetry.addData("Arm telemetry", myRobot.arm.getTelemetryForArm());
-            telemetry.update();
-
-
+            armTargetPos = -450;
+        } else if (gamepad2.a) {
+            armTargetPos = -725;
         }
+        else if (gamepad2.b) {
+            armTargetPos = -550;
+        }
+
+        myRobot.arm.moveArmVersion2(armTargetPos);
+        telemetry.addData("Arm telemetry", myRobot.arm.getTelemetryForArm());
+        telemetry.update();
 
     }
 }

@@ -54,7 +54,7 @@ public class TeleOpPT2 extends OpMode {
             target = -700;
         }
         else if (gamepad2.b) {
-            target = -600;
+            target = -650;
         }
 
         controller.setPID(p, i, d);
