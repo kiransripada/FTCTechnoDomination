@@ -116,6 +116,8 @@ public class DriveTrainPT {
             BackRightDCMotor.setPower(-power * 0.75);
             //sleep(2000);
         }
+
+        while (FrontLeftDCMotor.isBusy()){}
     }
 
     public void alignAngle ( double angle, double power){
@@ -150,7 +152,13 @@ public class DriveTrainPT {
         FrontRightDCMotor.setPower(power);
         BackLeftDCMotor.setPower(power);
         BackRightDCMotor.setPower(power);
+
+        while (FrontLeftDCMotor.isBusy()){}
+
     }
+
+
+
 
 
 

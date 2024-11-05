@@ -6,6 +6,7 @@ import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
@@ -18,7 +19,8 @@ public class TeleOpPT extends OpMode {
     private RobotParametersPT params;
     private Robot myRobot;
     private int cnt = 0;
-    private int armTargetPos;
+    private int armTargetPos = 0;
+    boolean pressedOrNotPressed = false;
 
     @Override
     public void init() {
@@ -48,9 +50,9 @@ public class TeleOpPT extends OpMode {
         }
 
         if (gamepad1.right_bumper) {
-            myRobot.slide.slideIn(0.5);
+            myRobot.slide.slideIn(1);
         } else if (gamepad1.left_bumper) {
-            myRobot.slide.slideOut(-0.5);
+            myRobot.slide.slideOut(-1);
         } else {
             myRobot.slideStop();
         }
@@ -64,17 +66,20 @@ public class TeleOpPT extends OpMode {
 
 
         if (gamepad2.y) {
-            armTargetPos = -450;
+            armTargetPos = -350;
+            pressedOrNotPressed = true;
         } else if (gamepad2.a) {
-            armTargetPos = -725;
+            armTargetPos = -700;
+            pressedOrNotPressed = true;
         }
-        else if (gamepad2.b) {
-            armTargetPos = -550;
+        //else if (gamepad2.b) {
+          //  armTargetPos = -650;
+        //}
+
+        if (pressedOrNotPressed == true) {
+            myRobot.arm.moveArmVersion2(armTargetPos);
+            telemetry.addData("Arm telemetry", myRobot.arm.getTelemetryForArm());
+            telemetry.update();
         }
-
-        myRobot.arm.moveArmVersion2(armTargetPos);
-        telemetry.addData("Arm telemetry", myRobot.arm.getTelemetryForArm());
-        telemetry.update();
-
     }
 }

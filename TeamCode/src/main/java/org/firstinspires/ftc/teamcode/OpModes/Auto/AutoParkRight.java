@@ -36,7 +36,7 @@ public class AutoParkRight extends LinearOpMode {
         phase = 0;
 
         while (opModeIsActive()) {
-            myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
+            //myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
             //sleep(1500);
             myRobot.driveTrain.driveStraight(params.defaultDrivePower * params.powerReduction, 44);
             while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}

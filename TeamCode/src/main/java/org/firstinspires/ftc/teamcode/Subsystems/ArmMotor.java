@@ -28,10 +28,17 @@ public class ArmMotor {
     private PIDController controller;
     public static double p =0.0180, i=0, d=0.0009;
     public static double f=0.77;
+    public static final double NEW_P = 15;
+    public static final double NEW_I = 0.8;
+    public static final double NEW_D = 0.5;
+    public static final double NEW_F = 3;
+
 
     public static int targetPos = 0;
     private static double ticks_in_degree = 1425.1/180.0;
     boolean targetReached = false;
+
+    public static int endAutoArmPosition;
 
 
     public ArmMotor(RobotParametersPT params, HardwareMap hardwareMap) {
@@ -113,10 +120,10 @@ public class ArmMotor {
 
     public void moveArm(double distance) {
 
-//        pidfOrig = ArmMotor1.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
+        pidfOrig = ArmMotor1.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Change coefficients using methods included with DcMotorEx class.
-        PIDFCoefficients pidfNew = new PIDFCoefficients(p, i, d, f);
+        PIDFCoefficients pidfNew = new PIDFCoefficients(NEW_P, NEW_I, NEW_D, NEW_F);
 
         ArmMotor1.setPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER, pidfNew);
 
@@ -127,7 +134,7 @@ public class ArmMotor {
 
         ArmMotor1.setTargetPosition((int)distance);
         ArmMotor1.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        ArmMotor1.setPower(0.9);
+        ArmMotor1.setPower(0.3);
 
     }
 
@@ -195,19 +202,17 @@ public class ArmMotor {
         f=0.77;
         ticks_in_degree =  1425.1/180.0;
 
-
-
         controller.setPID(p, i, d);
         armPos = ArmMotor1.getCurrentPosition();
-        targetPos = target;
+        targetPos = target - endAutoArmPosition;
         pid = controller.calculate(armPos, targetPos);
         ff = Math.cos(Math.toRadians(targetPos / ticks_in_degree)) * f;
 
         power = pid + ff;
 
-
-
         ArmMotor1.setPower(power * .75);
+
+
 
     }
     public String getTelemetryForArm(){
@@ -218,6 +223,9 @@ public class ArmMotor {
         telemetry = telemetry + "ff"+ ff;
         telemetry = telemetry + "power"+ power;
         telemetry = telemetry + "target"+ targetPos;
+
+        telemetry = telemetry + "End of Auto Arm Position: " + endAutoArmPosition;
+
 
         return telemetry;
     }
