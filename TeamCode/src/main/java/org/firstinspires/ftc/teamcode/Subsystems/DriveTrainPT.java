@@ -24,6 +24,8 @@ public class DriveTrainPT {
     public DcMotor BackRightDCMotor;
     private IMU imu;
     private YawPitchRollAngles orientation;
+    public boolean initializedFrontLeft = false;
+    public boolean initializedFrontRight = false;
 
 
     public DriveTrainPT(RobotParametersPT params, HardwareMap hardwareMap){
@@ -120,7 +122,7 @@ public class DriveTrainPT {
             //sleep(2000);
         }
 
-        while (FrontLeftDCMotor.isBusy()){}
+
     }
 
     public void alignAngle ( double angle, double power){
@@ -160,34 +162,64 @@ public class DriveTrainPT {
 
     }
 
-    boolean initialized = false;
+
 
     public boolean driveStraightPT(double power, double distance){
-        ArrayList<Integer> targets = new ArrayList<>(4);
-        ArrayList<DcMotor> motors = new ArrayList<>(Arrays.asList(FrontLeftDCMotor,FrontRightDCMotor,BackLeftDCMotor,BackRightDCMotor));
+        ArrayList<Integer> targets = new ArrayList<>(2);
+        ArrayList<DcMotor> motors = new ArrayList<>(Arrays.asList(FrontLeftDCMotor,FrontRightDCMotor));
         boolean done = true;
+
+
 
         for(int i=0;i<motors.size();i++){
             DcMotor motor = motors.get(i);
 
-            if(!initialized){
+            if(!initializedFrontLeft && i==0){
                 int target = motor.getCurrentPosition() + getNewPosition(distance);
                 motor.setTargetPosition(target);
-                initialized = true;
+                initializedFrontLeft = true;
+                targets.add(target);
+            }
+
+            if(!initializedFrontRight && i==1){
+                int target = motor.getCurrentPosition() + getNewPosition(distance);
+                motor.setTargetPosition(target);
+                initializedFrontRight = true;
                 targets.add(target);
             }
 
             motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
             motor.setPower(power);
-            if(Math.abs(motor.getCurrentPosition() - targets.get(i)) > 20) done = false;
+            BackLeftDCMotor.setPower(power);
+            BackRightDCMotor.setPower(power);
+            if(Math.abs(motor.getCurrentPosition() - targets.get(i)) > 20) done = true;
         }
         if (done){
-            initialized = false;
+            initializedFrontLeft = false;
+            initializedFrontRight = false;
             return true;
         }
         else {
             return false;
         }
+
+    }
+
+    public boolean turnRightByGyroPT(double angle, double power) {
+        //Its important to run without encoder bc encoders doesnt work on turning
+        FrontLeftDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        FrontRightDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        while (angle < getYaw()) {
+            FrontLeftDCMotor.setPower(power);
+            FrontRightDCMotor.setPower(-power * 0.75);
+            BackLeftDCMotor.setPower(power);
+            BackRightDCMotor.setPower(-power * 0.75);
+            //sleep(2000);
+        }
+
+        return true;
 
     }
 
