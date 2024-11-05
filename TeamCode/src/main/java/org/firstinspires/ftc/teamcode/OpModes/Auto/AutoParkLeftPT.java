@@ -19,6 +19,7 @@ public class AutoParkLeftPT extends LinearOpMode {
     int phase = 0;
 
     boolean driveStraightReached = false;
+    boolean stepOne = false;
 
     //hello world; we are about to override
     @Override
@@ -45,9 +46,15 @@ public class AutoParkLeftPT extends LinearOpMode {
         while (opModeIsActive()){
 
             //Go forward 41 in
-             driveStraightReached = myRobot.driveTrain.driveStraightPT(params.defaultDrivePower*params.powerReduction, 25.0);
+            if (!stepOne) {
+                driveStraightReached = myRobot.driveTrain.driveStraightPT(params.defaultDrivePower * params.powerReduction, 25.0);
+            }
+             if (driveStraightReached) {
+                 stepOne = true;
+             }
 
-            break;
+
+            //break;
 
         }
 
