@@ -45,13 +45,15 @@ public class AutoParkLeftPT extends LinearOpMode {
             //sleep(1500);
 
             //Go forward 41 in
-            myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 32.0);
+            myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 25.0);
 
             myRobot.driveTrain.stop();
 
-            myRobot.arm.moveArmVersion2(-350);
+            if (myRobot.arm.ArmMotor1.getCurrentPosition() > -350) {
+                myRobot.arm.moveArmVersion2(-350);
+            }
 
-
+            sleep(3000);
             //myRobot.driveTrain.turnRightByGyro(-90, params.defaultDrivePower*params.powerReduction);
             break;
 

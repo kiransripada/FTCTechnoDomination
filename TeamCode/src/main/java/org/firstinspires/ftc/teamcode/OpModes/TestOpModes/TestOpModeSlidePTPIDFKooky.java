@@ -1,0 +1,70 @@
+//Leilanie
+
+package org.firstinspires.ftc.teamcode.OpModes.TestOpModes;
+
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.arcrobotics.ftclib.controller.PIDController;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+
+import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
+
+/****/
+@Config
+/****/
+
+@TeleOp(name="SlideTestPTPIDFKooky", group="TestOpModes")
+public class TestOpModeSlidePTPIDFKooky extends OpMode {
+
+    private PIDController controller;
+    public static double p =0.0,i=0.0,d=0.0;
+    public static double f=0.0;
+
+    public static int target = 0;
+    private final double ticks_in_degree = 384.5/180.0;
+    private DcMotorEx SlideMotor1;
+    private DcMotorEx SlideMotor2;
+    boolean targetReached = false;
+
+    @Override
+    public void init(){
+        controller = new PIDController(p,i,d);
+        telemetry = new MultipleTelemetry(telemetry,FtcDashboard.getInstance().getTelemetry());
+
+        SlideMotor1 = hardwareMap.get(DcMotorEx.class, RobotParametersPT.slideMotorName1);
+        SlideMotor2 = hardwareMap.get(DcMotorEx.class, RobotParametersPT.slideMotorName2);
+        SlideMotor2.setDirection(DcMotorEx.Direction.REVERSE);
+        SlideMotor1.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        SlideMotor2.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+
+    }
+
+    @Override
+    public void loop(){
+
+            controller.setPID(p, i, d);
+
+            int slidePos = SlideMotor1.getCurrentPosition();
+            double pid = controller.calculate(slidePos, target);
+            double ff = Math.cos(Math.toRadians(target / ticks_in_degree)) * f;
+
+            double power = pid;
+
+            SlideMotor1.setPower(power * .75);
+            SlideMotor2.setPower(power * .75);
+
+            telemetry.addData("pos", slidePos);
+            telemetry.addData("pid", pid);
+            telemetry.addData("ff", ff);
+            telemetry.addData("power ", power);
+            telemetry.addData("target ", target);
+            telemetry.update();
+    }
+}
+
+
+
