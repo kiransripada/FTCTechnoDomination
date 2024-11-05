@@ -212,8 +212,6 @@ public class ArmMotor {
 
         ArmMotor1.setPower(power * .75);
 
-
-
     }
     public String getTelemetryForArm(){
 

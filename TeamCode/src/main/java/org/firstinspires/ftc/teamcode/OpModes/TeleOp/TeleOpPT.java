@@ -20,7 +20,9 @@ public class TeleOpPT extends OpMode {
     private Robot myRobot;
     private int cnt = 0;
     private int armTargetPos = 0;
-    boolean pressedOrNotPressed = false;
+    private int slideTargetPos = 0;
+    boolean pressedOrNotPressedArm = false;
+    boolean pressedOrNotPressedSlide = false;
 
     @Override
     public void init() {
@@ -46,16 +48,25 @@ public class TeleOpPT extends OpMode {
             myRobot.claw.turnIn(1);
         } else if (gamepad2.right_bumper) {
             myRobot.claw.turnOut(1);
-            //Slide control
+        }
+        //Slide controls
+        if (gamepad1.y) {
+            slideTargetPos = 2300;
+            pressedOrNotPressedSlide = true;
+        } else if (gamepad1.a) {
+            slideTargetPos = 36;
+            pressedOrNotPressedSlide = true;
+        } else if (gamepad1.b){
+            slideTargetPos = 1500;
+            pressedOrNotPressedSlide = true;
         }
 
-        if (gamepad1.right_bumper) {
-            myRobot.slide.slideIn(1);
-        } else if (gamepad1.left_bumper) {
-            myRobot.slide.slideOut(-1);
-        } else {
-            myRobot.slideStop();
+        if (pressedOrNotPressedSlide == true) {
+            myRobot.slide.moveSlidesVersion2(slideTargetPos);
+            telemetry.addData("Slides telemetry", myRobot.slide.getTelemetryForSlides());
+            telemetry.update();
         }
+
 
         // Send telemetry data
         telemetry.addData("Status", "Running");
@@ -67,16 +78,16 @@ public class TeleOpPT extends OpMode {
 
         if (gamepad2.y) {
             armTargetPos = -350;
-            pressedOrNotPressed = true;
+            pressedOrNotPressedArm = true;
         } else if (gamepad2.a) {
             armTargetPos = -700;
-            pressedOrNotPressed = true;
+            pressedOrNotPressedArm = true;
         }
         //else if (gamepad2.b) {
           //  armTargetPos = -650;
         //}
 
-        if (pressedOrNotPressed == true) {
+        if (pressedOrNotPressedArm == true) {
             myRobot.arm.moveArmVersion2(armTargetPos);
             telemetry.addData("Arm telemetry", myRobot.arm.getTelemetryForArm());
             telemetry.update();
