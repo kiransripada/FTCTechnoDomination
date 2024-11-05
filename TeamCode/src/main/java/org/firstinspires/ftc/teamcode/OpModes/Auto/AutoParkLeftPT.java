@@ -18,6 +18,8 @@ public class AutoParkLeftPT extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     int phase = 0;
 
+    boolean driveStraightReached = false;
+
     //hello world; we are about to override
     @Override
     public void runOpMode(){
@@ -41,20 +43,10 @@ public class AutoParkLeftPT extends LinearOpMode {
 
 
         while (opModeIsActive()){
-            //myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
-            //sleep(1500);
 
             //Go forward 41 in
-            myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 25.0);
+             driveStraightReached = myRobot.driveTrain.driveStraightPT(params.defaultDrivePower*params.powerReduction, 25.0);
 
-            myRobot.driveTrain.stop();
-
-            if (myRobot.arm.ArmMotor1.getCurrentPosition() > -350) {
-                myRobot.arm.moveArmVersion2(-350);
-            }
-
-            sleep(3000);
-            //myRobot.driveTrain.turnRightByGyro(-90, params.defaultDrivePower*params.powerReduction);
             break;
 
         }

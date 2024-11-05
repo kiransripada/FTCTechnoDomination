@@ -13,6 +13,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.YawPitchRollAngles;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class DriveTrainPT {
     private RobotParametersPT params;
     public DcMotor FrontLeftDCMotor;
@@ -154,6 +157,37 @@ public class DriveTrainPT {
         BackRightDCMotor.setPower(power);
 
         while (FrontLeftDCMotor.isBusy()){}
+
+    }
+
+    boolean initialized = false;
+
+    public boolean driveStraightPT(double power, double distance){
+        ArrayList<Integer> targets = new ArrayList<>(4);
+        ArrayList<DcMotor> motors = new ArrayList<>(Arrays.asList(FrontLeftDCMotor,FrontRightDCMotor,BackLeftDCMotor,BackRightDCMotor));
+        boolean done = true;
+
+        for(int i=0;i<motors.size();i++){
+            DcMotor motor = motors.get(i);
+
+            if(!initialized){
+                int target = motor.getCurrentPosition() + getNewPosition(distance);
+                motor.setTargetPosition(target);
+                initialized = true;
+                targets.add(target);
+            }
+
+            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            motor.setPower(power);
+            if(Math.abs(motor.getCurrentPosition() - targets.get(i)) > 20) done = false;
+        }
+        if (done){
+            initialized = false;
+            return true;
+        }
+        else {
+            return false;
+        }
 
     }
 
