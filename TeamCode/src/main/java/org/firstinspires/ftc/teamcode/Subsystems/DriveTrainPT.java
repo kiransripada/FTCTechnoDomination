@@ -206,26 +206,5 @@ public class DriveTrainPT {
 
     }
 
-    public boolean turnRightByGyroPT(double angle, double power) {
-        //Its important to run without encoder bc encoders doesnt work on turning
-        FrontLeftDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        FrontRightDCMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-
-        while (angle < getYaw()) {
-            FrontLeftDCMotor.setPower(power);
-            FrontRightDCMotor.setPower(-power * 0.75);
-            BackLeftDCMotor.setPower(power);
-            BackRightDCMotor.setPower(-power * 0.75);
-            //sleep(2000);
-        }
-
-        return true;
-
-    }
-
-
-
-
-
 
 }
