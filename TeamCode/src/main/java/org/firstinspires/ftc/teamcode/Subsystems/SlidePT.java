@@ -16,8 +16,8 @@ public class SlidePT {
 
     public static int target = 0;
     private final double ticks_in_degree = 384.5/180.0;
-    private DcMotorEx SlideMotor1;
-    private DcMotorEx SlideMotor2;
+    public DcMotorEx SlideMotor1;
+    public DcMotorEx SlideMotor2;
     boolean targetReached = false;
 
     int slidePos;
