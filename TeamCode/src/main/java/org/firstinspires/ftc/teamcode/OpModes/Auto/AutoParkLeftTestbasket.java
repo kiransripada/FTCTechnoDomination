@@ -9,8 +9,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
-@Autonomous(name="AutoParkLeft", group="Autonomous")
-public class AutoParkLeft extends LinearOpMode {
+@Autonomous(name="AutoParkLeftBasketTest", group="Autonomous")
+public class AutoParkLeftTestbasket extends LinearOpMode {
 
 
     private RobotParametersPT params;
@@ -43,6 +43,12 @@ public class AutoParkLeft extends LinearOpMode {
         while (opModeIsActive()){
             //myRobot.driveStraight(params.defaultDrivePower*params.powerReduction);
             //sleep(1500);
+            //Go forward 11 in
+            myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 11.0);
+            while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}
+            myRobot.driveTrain.stop();
+            //slide up
+
             //Go forward 41 in
             myRobot.driveTrain.driveStraight(params.defaultDrivePower*params.powerReduction, 42.0);
             while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {}

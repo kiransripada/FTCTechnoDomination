@@ -15,6 +15,7 @@ public class SlidePT {
     public static double f=0.77;
 
     public static int target = 0;
+    public static int slideStartingPosition;
     private final double ticks_in_degree = 384.5/180.0;
     public DcMotorEx SlideMotor1;
     public DcMotorEx SlideMotor2;
@@ -35,6 +36,7 @@ public class SlidePT {
         SlideMotor2.setDirection(DcMotor.Direction.REVERSE);
         SlideMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         SlideMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        slideStartingPosition = SlideMotor1.getCurrentPosition();
 
     }
 

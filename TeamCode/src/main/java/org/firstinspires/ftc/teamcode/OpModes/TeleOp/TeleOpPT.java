@@ -54,10 +54,10 @@ public class TeleOpPT extends OpMode {
             slideTargetPos = 2300;
             pressedOrNotPressedSlide = true;
         } else if (gamepad1.a) {
-            slideTargetPos = 36;
+            slideTargetPos = myRobot.slide.slideStartingPosition+50;
             pressedOrNotPressedSlide = true;
         } else if (gamepad1.b){
-            slideTargetPos = 1500;
+            slideTargetPos = 800;
             pressedOrNotPressedSlide = true;
         }
 
@@ -81,6 +81,9 @@ public class TeleOpPT extends OpMode {
             pressedOrNotPressedArm = true;
         } else if (gamepad2.a) {
             armTargetPos = -700;
+            pressedOrNotPressedArm = true;
+        } else if (gamepad2.b) {
+            armTargetPos = -650;
             pressedOrNotPressedArm = true;
         }
         //else if (gamepad2.b) {

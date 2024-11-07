@@ -133,7 +133,7 @@ public class AutoParkLeftPT extends LinearOpMode {
                 telemetry.update();
                 driveStraightReached = myRobot.driveTrain.driveStraightPT(params.defaultDrivePower * params.powerReduction, 15.0);
                 telemetry.addData("StepFive", "Running curr pos " + myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition());
-                telemetry.addData("StepOne", "drive reached " + driveStraightReached);
+                telemetry.addData("StepFive", "drive reached " + driveStraightReached);
                 telemetry.update();
                 sleep(1000);
             }
@@ -143,6 +143,7 @@ public class AutoParkLeftPT extends LinearOpMode {
                 telemetry.addData("StepFive after", "drive reached " + driveStraightReached);
                 telemetry.update();
                 myRobot.driveTrain.stop();
+                stepOne = false;
             }
 
 

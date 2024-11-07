@@ -78,6 +78,9 @@ public class AutoParkRight extends LinearOpMode {
             while (myRobot.driveTrain.FrontLeftDCMotor.isBusy()) {
             }
             myRobot.driveTrain.stop();*/
+
+            myRobot.arm.endAutoArmPosition = myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1);
+
             break;
 
 
