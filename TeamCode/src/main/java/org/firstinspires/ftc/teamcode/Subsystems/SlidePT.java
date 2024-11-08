@@ -36,6 +36,7 @@ public class SlidePT {
         SlideMotor2.setDirection(DcMotor.Direction.REVERSE);
         SlideMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         SlideMotor2.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //SlideMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slideStartingPosition = SlideMotor1.getCurrentPosition();
 
     }
@@ -83,6 +84,11 @@ public class SlidePT {
 
         double power = pid;
 
+        /*if (power > 0.5)
+            power = 0.5;
+        if (power < -0.5)
+            power = -0.5;
+        */
         SlideMotor1.setPower(power * .75);
         SlideMotor2.setPower(power * .75);
     }

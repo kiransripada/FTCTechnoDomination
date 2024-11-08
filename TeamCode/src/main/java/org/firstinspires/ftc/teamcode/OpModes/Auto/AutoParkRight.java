@@ -21,7 +21,7 @@ public class AutoParkRight extends LinearOpMode {
     @Override
     public void runOpMode() {
         params = new RobotParametersPT();
-        myRobot = new Robot(params, hardwareMap, true, false, false, false);
+        myRobot = new Robot(params, hardwareMap, true, false, false, true);
         telemetry.addData("Status", "Initialized");
         telemetry.update();
 
@@ -79,7 +79,7 @@ public class AutoParkRight extends LinearOpMode {
             }
             myRobot.driveTrain.stop();*/
 
-            myRobot.arm.endAutoArmPosition = myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1);
+            myRobot.arm.endAutoArmPosition = myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1) - 10;
 
             break;
 

@@ -38,11 +38,11 @@ public class ClawPT {
        // ClawServo1.setPower(power);
        // ClawServo2.setPower(-power);
 
-        ClawServo1.setPosition(0);
+        ClawServo1.setPosition(1);
     }
 
     public void turnOut(double power){
-        ClawServo1.setPosition(1);
+        ClawServo1.setPosition(0);
         ClawServo2.setPower(power);
     }
 
