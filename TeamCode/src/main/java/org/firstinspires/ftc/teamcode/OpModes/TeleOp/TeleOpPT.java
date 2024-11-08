@@ -88,7 +88,7 @@ public class TeleOpPT extends OpMode {
         } else if (gamepad2.b) {
             armTargetPos = -650;
             pressedOrNotPressedArm = true;
-        }
+        } //ugjkjhgkj
         //else if (gamepad2.b) {
           //  armTargetPos = -650;
         //}
