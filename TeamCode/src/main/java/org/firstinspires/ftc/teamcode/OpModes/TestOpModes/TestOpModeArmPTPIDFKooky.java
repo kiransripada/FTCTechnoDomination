@@ -55,7 +55,7 @@ public class TestOpModeArmPTPIDFKooky extends OpMode {
             double pid = controller.calculate(armPos, target);
             double ff = Math.cos(Math.toRadians(target / ticks_in_degree)) * f;
 
-            double power = pid;
+            double power = pid + ff;
 
             ArmMotor1.setPower(power * .75);
 

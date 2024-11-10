@@ -57,7 +57,7 @@ public class TeleOpPT extends OpMode {
             slideTargetPos = myRobot.slide.slideStartingPosition+50;
             pressedOrNotPressedSlide = true;
         } else if (gamepad1.b){
-            slideTargetPos = myRobot.slide.slideStartingPosition+ 800;
+            slideTargetPos = myRobot.slide.slideStartingPosition+ 750;
             pressedOrNotPressedSlide = true;
         }
 
@@ -82,16 +82,16 @@ public class TeleOpPT extends OpMode {
 
         } else if (gamepad2.a) {
             if(myRobot.slide.SlideMotor1.getCurrentPosition() < 1000) {
-                armTargetPos = -700;
+                armTargetPos = -720;
                 pressedOrNotPressedArm = true;
             }
         } else if (gamepad2.b) {
-            armTargetPos = -650;
+            armTargetPos = -700;
             pressedOrNotPressedArm = true;
-        } //ugjkjhgkj
-        //else if (gamepad2.b) {
-          //  armTargetPos = -650;
-        //}
+        } else if (gamepad2.x) {
+            armTargetPos = -675;
+            pressedOrNotPressedArm = true;
+        }
         //armTargetPos = -700;
         //pressedOrNotPressedArm = true;
 

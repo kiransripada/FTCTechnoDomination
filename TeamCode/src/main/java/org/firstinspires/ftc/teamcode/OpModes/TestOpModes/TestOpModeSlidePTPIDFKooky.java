@@ -11,6 +11,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
 /****/
@@ -21,8 +22,8 @@ import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 public class TestOpModeSlidePTPIDFKooky extends OpMode {
 
     private PIDController controller;
-    public static double p =0.0,i=0.0,d=0.0;
-    public static double f=0.0;
+    public static double p =0.008,i=0.0,d=0.0;
+    public static double f=0.55;
 
     public static int target = 0;
     private final double ticks_in_degree = 384.5/180.0;
@@ -41,6 +42,11 @@ public class TestOpModeSlidePTPIDFKooky extends OpMode {
         SlideMotor1.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         SlideMotor2.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
 
+        SlideMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        SlideMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        SlideMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
     }
 
     @Override
@@ -52,16 +58,21 @@ public class TestOpModeSlidePTPIDFKooky extends OpMode {
             double pid = controller.calculate(slidePos, target);
             double ff = Math.cos(Math.toRadians(target / ticks_in_degree)) * f;
 
-            double power = pid;
+            double power = pid + ff;
 
             SlideMotor1.setPower(power * .75);
             SlideMotor2.setPower(power * .75);
+
+            if (SlideMotor1.getCurrent(CurrentUnit.AMPS) > 5){
+                target = SlideMotor1.getCurrentPosition();
+            }
 
             telemetry.addData("pos", slidePos);
             telemetry.addData("pid", pid);
             telemetry.addData("ff", ff);
             telemetry.addData("power ", power);
             telemetry.addData("target ", target);
+            telemetry.addData("Current ",SlideMotor1.getCurrent(CurrentUnit.AMPS));
             telemetry.update();
     }
 }
