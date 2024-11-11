@@ -2,8 +2,6 @@
 
 package org.firstinspires.ftc.teamcode.OpModes.Auto;
 
-import com.acmerobotics.dashboard.FtcDashboard;
-import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -12,7 +10,7 @@ import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
 @Autonomous(name="AutoParkLeftBasketTest", group="Autonomous")
-public class AutoParkLeftTestbasket extends LinearOpMode {
+public class AutoSpecimenParkRightTest extends LinearOpMode {
 
 
     private RobotParametersPT params;
@@ -59,12 +57,8 @@ public class AutoParkLeftTestbasket extends LinearOpMode {
         while (opModeIsActive()) {
             if (stepZero) {
                 myRobot.claw.turnIn(1);
-                myRobot.arm.moveArmVersion2(-300);
                 //telemetry.addData("Arm telemetry", myRobot.arm.getTelemetryForArm());
                 //telemetry.update();
-                myRobot.slide.moveSlidesVersion2(myRobot.slide.slideStartingPosition + 2100);
-                telemetry.addData("Slides telemetry", myRobot.slide.getTelemetryForSlides());
-                telemetry.update();
                 if (!driveToBasket) {
                     stepOne = true;
                 }
@@ -154,9 +148,8 @@ public class AutoParkLeftTestbasket extends LinearOpMode {
                 stepThree = false;
                 stepFour = false;
                 stepFive = false;
-                myRobot.arm.endAutoArmPosition = myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1);
-                    break;
 
+                    break;
                 }
             }
 
