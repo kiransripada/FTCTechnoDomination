@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 import org.firstinspires.ftc.teamcode.OpModes.TeleOp.TeleOpPT;
@@ -210,7 +211,9 @@ public class ArmMotor {
 
         power = pid + ff;
 
-        ArmMotor1.setPower(power * .75);
+        ArmMotor1.setPower(Range.clip(power * .75,-0.5,0.5));
+
+        //ArmMotor1.setPower(power * .75);
 
     }
     public String getTelemetryForArm(){

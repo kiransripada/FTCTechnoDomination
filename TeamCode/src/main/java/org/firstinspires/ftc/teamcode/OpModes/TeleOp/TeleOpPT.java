@@ -49,12 +49,15 @@ public class TeleOpPT extends OpMode {
         } else if (gamepad2.right_bumper) {
             myRobot.claw.turnOut(1);
         }
+
+        telemetry.addData("Slide Current Position" , myRobot.slide.SlideMotor1.getCurrentPosition());
+
         //Slide controls
         if (gamepad1.y) {
-            slideTargetPos = myRobot.slide.slideStartingPosition + 2300;
+            slideTargetPos = myRobot.slide.slideStartingPosition + 2100;
             pressedOrNotPressedSlide = true;
         } else if (gamepad1.a) {
-            slideTargetPos = myRobot.slide.slideStartingPosition+50;
+            slideTargetPos = myRobot.slide.slideStartingPosition;
             pressedOrNotPressedSlide = true;
         } else if (gamepad1.b){
             slideTargetPos = myRobot.slide.slideStartingPosition+ 750;
@@ -75,21 +78,26 @@ public class TeleOpPT extends OpMode {
         telemetry.update();
 
 
+        //Arm controls
 
+        //Straight vertical
         if (gamepad2.y) {
             armTargetPos = -350;
             pressedOrNotPressedArm = true;
-
+        //To pick sample off ground
         } else if (gamepad2.a) {
-            if(myRobot.slide.SlideMotor1.getCurrentPosition() < 1000) {
-                armTargetPos = -720;
+            if (myRobot.slide.SlideMotor1.getCurrentPosition() < 1000) {
+                myRobot.claw.turnOut(1);
+                armTargetPos = -740;
                 pressedOrNotPressedArm = true;
             }
+        //To pick inside submersible
         } else if (gamepad2.b) {
-            armTargetPos = -700;
+            armTargetPos = -600;
             pressedOrNotPressedArm = true;
+        //To pick specimen
         } else if (gamepad2.x) {
-            armTargetPos = -675;
+            armTargetPos = -700;
             pressedOrNotPressedArm = true;
         }
         //armTargetPos = -700;

@@ -14,6 +14,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
@@ -44,6 +45,11 @@ public class TestOpModeArmPTPIDFKooky extends OpMode {
         ArmMotor1.setDirection(DcMotorEx.Direction.REVERSE);
         ArmMotor1.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
+        ArmMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        ArmMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        ArmMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
     }
 
     @Override
@@ -57,7 +63,9 @@ public class TestOpModeArmPTPIDFKooky extends OpMode {
 
             double power = pid + ff;
 
-            ArmMotor1.setPower(power * .75);
+            //ArmMotor1.setPower(power * .75);
+
+            ArmMotor1.setPower(Range.clip(power * .75,-0.5,0.5));
 
             telemetry.addData("pos", armPos);
             telemetry.addData("pid", pid);

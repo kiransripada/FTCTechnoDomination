@@ -7,12 +7,14 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.util.Range;
 
+import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 public class SlidePT {
     private PIDController controller;
-    public static double p =0.0180,i=0,d=0.0009;
-    public static double f=0.77;
+    public static double p =0.035,i=0.0,d=0.00075;
+    public static double f=0.55;
 
     public static int target = 0;
     public static int slideStartingPosition;
@@ -39,6 +41,11 @@ public class SlidePT {
         //SlideMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         slideStartingPosition = SlideMotor1.getCurrentPosition();
 
+        SlideMotor1.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        SlideMotor1.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        SlideMotor1.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+
     }
 
     private RobotParametersPT params;
@@ -61,7 +68,7 @@ public class SlidePT {
 
     public void slideIn(double power){
         SlideMotor1.setPower(power);
-      SlideMotor2.setPower(power);
+        SlideMotor2.setPower(power);
     }
 
     public void slideOut(double power){
@@ -82,24 +89,29 @@ public class SlidePT {
         double pid = controller.calculate(slidePos, target);
         double ff = Math.cos(Math.toRadians(target / ticks_in_degree)) * f;
 
-        double power = pid;
+        double power = pid + ff;
 
-        /*if (power > 0.5)
-            power = 0.5;
-        if (power < -0.5)
-            power = -0.5;
-        */
-        SlideMotor1.setPower(power * .75);
-        SlideMotor2.setPower(power * .75);
+
+        SlideMotor1.setPower(Range.clip(power * .75,-0.75,0.75));
+        SlideMotor2.setPower(Range.clip(power * .75,-0.75,0.75));
+
+        if (SlideMotor1.getCurrent(CurrentUnit.AMPS) > 5 || SlideMotor2.getCurrent(CurrentUnit.AMPS) > 5){
+            target = SlideMotor1.getCurrentPosition() + 50;
+            SlideMotor1.setPower(0);
+            SlideMotor2.setPower(0);
+        }
+
     }
     public String getTelemetryForSlides(){
 
         String telemetry = "";
-        telemetry = telemetry + "pos - " + SlideMotor1.getCurrentPosition();
-        telemetry = telemetry + "pid"+ pid;
-        telemetry = telemetry + "ff"+ ff;
-        telemetry = telemetry + "power"+ power;
-        telemetry = telemetry + "target"+ target;
+        telemetry = telemetry + "\n pos - " + SlideMotor1.getCurrentPosition();
+        telemetry = telemetry + "\n pid - " + pid;
+        telemetry = telemetry + "\n ff - " + ff;
+        telemetry = telemetry + "\n power - " + power;
+        telemetry = telemetry + "\n Current - " + SlideMotor1.getCurrent(CurrentUnit.AMPS);
+        telemetry = telemetry + "\n target - " + target;
+        telemetry = telemetry + "\n startingPos - " + slideStartingPosition;
 
         return telemetry;
     }

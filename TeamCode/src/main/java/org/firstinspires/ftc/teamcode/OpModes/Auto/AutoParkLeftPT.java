@@ -18,7 +18,11 @@ public class AutoParkLeftPT extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     int phase = 0;
 
-    boolean driveStraightReached = false;
+    boolean driveToBasket = false;
+    double driveToBasketDis = 30.0;
+    boolean driveBackToStart = false;
+    double driveBackToStartDis = 5.0;
+    int startPosTracking = 0;
     boolean stepOne = true;
     boolean turnReached = false;
     boolean stepTwo = false;
@@ -27,6 +31,9 @@ public class AutoParkLeftPT extends LinearOpMode {
     boolean slideRaised = false;
     boolean stepFour = false;
     boolean stepFive = false;
+    boolean driveStarted = false;
+    boolean startTimerStepOne = false;
+    boolean startTimerStepTwo = false;
 
     //hello world; we are about to override
     @Override
@@ -48,106 +55,103 @@ public class AutoParkLeftPT extends LinearOpMode {
         phase = 0;
 
 
-
+        startPosTracking = myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition();
 
         while (opModeIsActive()){
 
-
-
-            //Go forward 41 in
             if (stepOne) {
                 myRobot.driveTrain.initializedFrontLeft = false;
                 myRobot.driveTrain.initializedFrontRight = false;
-                telemetry.addData("StepOne", " tar pos " + myRobot.driveTrain.getNewPosition(25.0));
+
+                driveToBasket = myRobot.driveTrain.driveStraightPT(params.defaultDrivePower * params.powerReduction, driveToBasketDis);
+
+                telemetry.addData("StepOne FrontLeft Curr Position - ",myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition());
+                telemetry.addData("StepOne Get Drive New Position - ",myRobot.driveTrain.getNewPosition(driveToBasketDis));
                 telemetry.update();
-                sleep(1000);
-                driveStraightReached = myRobot.driveTrain.driveStraightPT(params.defaultDrivePower * params.powerReduction, 15.0);
-                telemetry.addData("StepOne", "Running curr pos " + myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition());
-                telemetry.addData("StepOne", "drive reached " + driveStraightReached);
+
+                if ((myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition() - myRobot.driveTrain.getNewPosition(driveToBasketDis)) > 20) {
+                    driveToBasket = true;
+                } else {
+                    driveToBasket = false;
+                }
+                telemetry.addData("driveToBasket ", driveToBasket);
                 telemetry.update();
-                sleep(1000);
+                if (driveToBasket) {
+
+                    myRobot.driveTrain.stop();
+                    stepOne = false;
+                   // stepTwo = true;
+                    runtime.reset();
+                    startTimerStepOne = true;
+                    startPosTracking = myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition();
+                }
+
+
+
             }
-             if (driveStraightReached) {
-                 stepOne = false;
-                 driveStraightReached = false;
-                 telemetry.addData("StepOne after", "drive reached " + driveStraightReached);
-                 telemetry.update();
-                 myRobot.driveTrain.stop();
-                 stepTwo = true;
-             }
 
-             if (stepTwo){
-                 //turnReached = myRobot.driveTrain.turnRightByGyroPT(-90, params.defaultDrivePower*params.powerReduction);
-                 myRobot.driveTrain.turnRightByGyro(-90, params.defaultDrivePower*params.powerReduction);
-                 telemetry.addData("StepTwo", "current yaw " + myRobot.driveTrain.getYaw());
-                 telemetry.addData("StepTwo", "turn reached " + turnReached);
-                 telemetry.update();
-                 turnReached = true;
-             }
-
-             if (turnReached) {
-                 stepTwo = false;
-                 turnReached = false;
-                 myRobot.driveTrain.stop();
-                 stepThree = true;
-             }
-
-            if (stepThree) {
-                myRobot.claw.turnIn(1);
-                myRobot.arm.moveArmVersion2(-350);
-                telemetry.addData("Arm telemetry", myRobot.arm.getTelemetryForArm());
-                telemetry.update();
-
-                if (myRobot.arm.ArmMotor1.getCurrentPosition() >= -375 && myRobot.arm.ArmMotor1.getCurrentPosition() <= -325){
-                    armRaised = true;
+            if( startTimerStepOne){
+                if (runtime.seconds() > 5){
+                    stepTwo = true;
+                    stepOne = false;
+                    startTimerStepOne = false;
                 }
             }
 
-            if (armRaised) {
-                stepThree = true;
-                armRaised = false;
-                stepFour = true;
-            }
+            if (stepTwo) {
 
-            if (stepFour) {
-                myRobot.slide.moveSlidesVersion2(400);
-                telemetry.addData("Slides telemetry", myRobot.slide.getTelemetryForSlides());
-                telemetry.update();
-
-                if (myRobot.slide.SlideMotor1.getCurrentPosition() >= 375 && myRobot.slide.SlideMotor1.getCurrentPosition() <= 425){
-                    slideRaised = true;
-                }
-
-            }
-
-            if (slideRaised) {
-                stepFour = true;
-                slideRaised = false;
-                stepFive = true;
-            }
-
-            if (stepFive) {
                 myRobot.driveTrain.initializedFrontLeft = false;
                 myRobot.driveTrain.initializedFrontRight = false;
-                telemetry.addData("StepFive", " tar pos " + myRobot.driveTrain.getNewPosition(15.0));
+                if (!driveStarted) {
+                    driveBackToStart = myRobot.driveTrain.driveBackPT(params.defaultDrivePower * params.powerReduction, driveBackToStartDis);
+                    driveStarted = true;
+                }
+                telemetry.addData("StepTwo FrontLeft Curr Position - ",myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition());
+                telemetry.addData("Start Pos tracking ",startPosTracking);
+                telemetry.addData("StepTwo Get Drive New Position - ",myRobot.driveTrain.getNewPosition(driveBackToStartDis));
                 telemetry.update();
-                driveStraightReached = myRobot.driveTrain.driveStraightPT(params.defaultDrivePower * params.powerReduction, 15.0);
-                telemetry.addData("StepFive", "Running curr pos " + myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition());
-                telemetry.addData("StepFive", "drive reached " + driveStraightReached);
+
+                if ((myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition()-100) < (startPosTracking - myRobot.driveTrain.getNewPosition(driveBackToStartDis))) {
+                    driveBackToStart = true;
+                }
+                else {
+                    driveBackToStart = false;
+
+                }
+
+
+
+                /*if ((myRobot.driveTrain.getNewPosition(driveBackToStartDis) - myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition()) > 20) {
+                    driveBackToStart = true;
+                } else {
+                    driveBackToStart = false;
+                }*/
+                telemetry.addData("driveBackToStart ", driveBackToStart);
                 telemetry.update();
-                sleep(1000);
+                if (driveBackToStart) {
+                    stepTwo = false;
+                    myRobot.driveTrain.stop();
+
+                    stepThree = true;
+
+                    runtime.reset();
+                    startTimerStepTwo = true;
+                   // break;
+                }
+
+
             }
-            if (driveStraightReached) {
-                stepFive = false;
-                driveStraightReached = false;
-                telemetry.addData("StepFive after", "drive reached " + driveStraightReached);
-                telemetry.update();
-                myRobot.driveTrain.stop();
-                stepOne = false;
+
+            if( startTimerStepTwo){
+                if (runtime.seconds() > 5){
+                    stepThree = true;
+                    stepTwo = false;
+                    startTimerStepTwo = false;
+                    break;
+                }
             }
 
 
-            //break;
 
         }
 

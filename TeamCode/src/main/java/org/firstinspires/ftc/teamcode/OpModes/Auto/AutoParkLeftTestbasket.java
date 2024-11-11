@@ -20,7 +20,7 @@ public class AutoParkLeftTestbasket extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     int phase = 0;
 
-    double driveToBasketDis = 5.0;
+    double driveToBasketDis = 7.0;
     boolean driveToBasket = false;
     boolean stepZero = true;
     boolean stepOne = false;
@@ -31,17 +31,18 @@ public class AutoParkLeftTestbasket extends LinearOpMode {
     boolean slideRaised = false;
     boolean stepFour = false;
     boolean stepFive = false;
+    boolean stepSix = false;
 
 
     //hello world; we are about to override
     @Override
-    public void runOpMode(){
+    public void runOpMode() {
         params = new RobotParametersPT();
-        myRobot = new Robot(params,hardwareMap,true,true, true, true);
+        myRobot = new Robot(params, hardwareMap, true, true, true, true);
         //telemetry = new MultipleTelemetry(telemetry,FtcDashboard.getInstance().getTelemetry());
 
         telemetry.addData("Status", "Initialized");
-        telemetry.addData("yaw ",myRobot.driveTrain.getYaw());
+        telemetry.addData("yaw ", myRobot.driveTrain.getYaw());
         telemetry.update();
 
         // Wait for the start button to be pressed
@@ -55,15 +56,13 @@ public class AutoParkLeftTestbasket extends LinearOpMode {
         phase = 0;
 
 
-
-
-        while (opModeIsActive()){
+        while (opModeIsActive()) {
             if (stepZero) {
                 myRobot.claw.turnIn(1);
                 myRobot.arm.moveArmVersion2(-350);
                 //telemetry.addData("Arm telemetry", myRobot.arm.getTelemetryForArm());
                 //telemetry.update();
-                myRobot.slide.moveSlidesVersion2(myRobot.slide.slideStartingPosition+2300);
+                myRobot.slide.moveSlidesVersion2(myRobot.slide.slideStartingPosition + 2100);
                 telemetry.addData("Slides telemetry", myRobot.slide.getTelemetryForSlides());
                 telemetry.update();
                 if (!driveToBasket) {
@@ -84,10 +83,9 @@ public class AutoParkLeftTestbasket extends LinearOpMode {
                 //telemetry.update();
                 //sleep(1000);
 
-                if ((myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition() - myRobot.driveTrain.getNewPosition(driveToBasketDis)) > 20 ){
+                if ((myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition() - myRobot.driveTrain.getNewPosition(driveToBasketDis)) > 20) {
                     driveToBasket = true;
-                }
-                else {
+                } else {
                     driveToBasket = false;
                 }
                /* telemetry.addData("StepOne", "Running curr pos " + myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition());
@@ -96,7 +94,7 @@ public class AutoParkLeftTestbasket extends LinearOpMode {
                 telemetry.addData("StepOne", "drive reached " + driveToBasket);
                 */
 
-                 if (driveToBasket) {
+                if (driveToBasket) {
                     stepOne = false;
                     myRobot.driveTrain.stop();
                     //driveStraightReached = false;
@@ -107,77 +105,64 @@ public class AutoParkLeftTestbasket extends LinearOpMode {
                 telemetry.update();
             }
 
-            if (stepTwo){
+            if (stepTwo) {
                 stepZero = false;
                 myRobot.arm.moveArmVersion2(-350);
                 //telemetry.addData("Arm telemetry", myRobot.arm.getTelemetryForArm());
                 //telemetry.update();
-                myRobot.slide.moveSlidesVersion2(myRobot.slide.slideStartingPosition+ 2300);
+                myRobot.slide.moveSlidesVersion2(myRobot.slide.slideStartingPosition + 2100);
                 //telemetry.addData("Slides telemetry", myRobot.slide.getTelemetryForSlides());
                 //telemetry.update();
-                if (myRobot.slide.SlideMotor1.getCurrentPosition() > myRobot.slide.slideStartingPosition+2200) {
+                if (myRobot.slide.SlideMotor1.getCurrentPosition() > myRobot.slide.slideStartingPosition + 2000) {
+                    myRobot.arm.moveArmVersion2(-400);
                     myRobot.claw.turnOut(1);
-                    stepFour = true;
+                    stepFour = false;
                 }
             }
-           /* if (stepThree) {
-                myRobot.driveTrain.initializedFrontLeft = false;
-                myRobot.driveTrain.initializedFrontRight = false;
-                driveToBasket = myRobot.driveTrain.driveStraightPT(params.defaultDrivePower * params.powerReduction, -2);
-                telemetry.addData("StepThree", "Running curr pos " + myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition());
-                telemetry.addData("StepThree", stepThree);
-                telemetry.addData("StepThree", " tar pos " + myRobot.driveTrain.getNewPosition(2));
-                telemetry.addData("StepThree", "drive reached " + driveToBasket);
-                telemetry.update();
-               if ((myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition() - myRobot.driveTrain.getNewPosition(-2)) > 20) {
-                    driveToBasket = true;
-                    stepThree = false;
-                    myRobot.arm.endAutoArmPosition = myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1);
-                    //stepFour = true;
-                } else {
-                    driveToBasket = false;
-                }
-            }*/
 
-            if (stepFour){
+            if (stepFour) {
                 stepThree = false;
                 stepTwo = false;
                 myRobot.claw.turnOut(1);
-                myRobot.arm.moveArmVersion2(-350);
-                myRobot.slide.moveSlidesVersion2( myRobot.slide.slideStartingPosition+50);
-                telemetry.addData("Slides telemetry", myRobot.slide.getTelemetryForSlides());
-                telemetry.update();
+                myRobot.slide.moveSlidesVersion2(myRobot.slide.slideStartingPosition+2100);
+                myRobot.arm.moveArmVersion2(-250);
 
-                if (myRobot.slide.SlideMotor1.getCurrentPosition() < myRobot.slide.slideStartingPosition + 100) {
-                    myRobot.claw.turnOut(1);
-                    if (!driveToBasket) {
-                        stepFive = true;
-                    }
-                }
+                stepFive = true;
             }
 
 
             if (stepFive) {
-                myRobot.driveTrain.initializedFrontLeft = false;
-                myRobot.driveTrain.initializedFrontRight = false;
-                driveToBasket = myRobot.driveTrain.driveStraightPT(params.defaultDrivePower * params.powerReduction, 4);
-
-                if ((myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition() - myRobot.driveTrain.getNewPosition(4)) > 20 ){
-                    driveToBasket = true;
-                    stepFive = false;
-                    //myRobot.arm.endAutoArmPosition = myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1);
+                stepFour = false;
+                myRobot.claw.turnOut(1);
+                myRobot.arm.moveArmVersion2(-250);
+                myRobot.slide.moveSlidesVersion2(myRobot.slide.slideStartingPosition);
+                //myRobot.arm.moveArmVersion2(0);
+                telemetry.addData("Slides telemetry", myRobot.slide.getTelemetryForSlides());
+                telemetry.update();
+                if (myRobot.slide.SlideMotor1.getCurrentPosition() < myRobot.slide.slideStartingPosition + 250) {
+                    myRobot.claw.turnOut(1);
+                    stepSix = true;
                 }
-                else {
-                    driveToBasket = false;
 
+            }
+
+            if (stepSix) {
+                stepFive = false;
+                myRobot.claw.turnOut(1);
+                myRobot.arm.moveArmVersion2(0);
+                //myRobot.slide.moveSlidesVersion2(myRobot.slide.slideStartingPosition);
+                telemetry.addData("Slides telemetry", myRobot.slide.getTelemetryForSlides());
+                telemetry.update();
+                if (myRobot.arm.ArmMotor1.getCurrentPosition() < 10) {
+                    myRobot.claw.turnOut(1);
+                    //Storing arm position at end of auto
+                    myRobot.arm.endAutoArmPosition = myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1);
+
+                    break;
                 }
             }
 
         }
 
-
-
     }
-
 }
-

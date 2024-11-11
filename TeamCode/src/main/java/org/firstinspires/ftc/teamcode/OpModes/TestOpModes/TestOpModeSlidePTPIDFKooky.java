@@ -10,6 +10,7 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.navigation.CurrentUnit;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
@@ -22,7 +23,7 @@ import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 public class TestOpModeSlidePTPIDFKooky extends OpMode {
 
     private PIDController controller;
-    public static double p =0.008,i=0.0,d=0.0;
+    public static double p =0.035,i=0.0,d=0.00075;
     public static double f=0.55;
 
     public static int target = 0;
@@ -60,11 +61,14 @@ public class TestOpModeSlidePTPIDFKooky extends OpMode {
 
             double power = pid + ff;
 
-            SlideMotor1.setPower(power * .75);
-            SlideMotor2.setPower(power * .75);
+
+            SlideMotor1.setPower(Range.clip(power * .75,-0.75,0.75));
+            SlideMotor2.setPower(Range.clip(power * .75,-0.75,0.75));
 
             if (SlideMotor1.getCurrent(CurrentUnit.AMPS) > 5){
-                target = SlideMotor1.getCurrentPosition();
+                target = SlideMotor1.getCurrentPosition() + 50;
+                SlideMotor1.setPower(0);
+                SlideMotor2.setPower(0);
             }
 
             telemetry.addData("pos", slidePos);

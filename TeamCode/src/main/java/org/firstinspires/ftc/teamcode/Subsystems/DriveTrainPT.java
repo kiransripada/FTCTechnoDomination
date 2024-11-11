@@ -206,5 +206,47 @@ public class DriveTrainPT {
 
     }
 
+    public boolean driveBackPT(double power, double distance){
+        ArrayList<Integer> targets = new ArrayList<>(2);
+        ArrayList<DcMotor> motors = new ArrayList<>(Arrays.asList(FrontLeftDCMotor,FrontRightDCMotor));
+        boolean done = true;
+
+
+
+        for(int i=0;i<motors.size();i++){
+            DcMotor motor = motors.get(i);
+
+            if(!initializedFrontLeft && i==0){
+                int target = motor.getCurrentPosition() - getNewPosition(distance);
+                motor.setTargetPosition(target);
+                initializedFrontLeft = true;
+                targets.add(target);
+            }
+
+            if(!initializedFrontRight && i==1){
+                int target = motor.getCurrentPosition() - getNewPosition(distance);
+                motor.setTargetPosition(target);
+                initializedFrontRight = true;
+                targets.add(target);
+            }
+
+            motor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            motor.setPower(-power);
+            BackLeftDCMotor.setPower(-power);
+            BackRightDCMotor.setPower(-power);
+            if(Math.abs(targets.get(i) - motor.getCurrentPosition()) > 20) done = true;
+        }
+        if (done){
+            initializedFrontLeft = false;
+            initializedFrontRight = false;
+            return true;
+        }
+        else {
+            return false;
+        }
+
+    }
+
 
 }
