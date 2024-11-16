@@ -12,7 +12,6 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.Hardware.Robot;
 import org.firstinspires.ftc.teamcode.Hardware.RobotParametersPT;
 
-
 @TeleOp(name="TeleOpPT", group="TeleOp")
 public class TeleOpPT extends OpMode {
 
@@ -29,7 +28,10 @@ public class TeleOpPT extends OpMode {
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
         params = new RobotParametersPT();
         myRobot = new Robot(params, hardwareMap, true, true, true, true);
+
+        //myRobot.arm.endAutoArmPosition = myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1);
         telemetry.addData("Status", "Initialized");
+        telemetry.addData("Auto Arm Position",myRobot.arm.endAutoArmPosition);
         telemetry.update();
     }
 
@@ -43,11 +45,18 @@ public class TeleOpPT extends OpMode {
 
         myRobot.driveTrain.drive(drive, strafe, rotate);
 
-        // Intake control
+        // Claw control
         if (gamepad2.left_bumper) {
             myRobot.claw.turnIn(1);
         } else if (gamepad2.right_bumper) {
-            myRobot.claw.turnOut(1);
+            if (myRobot.slide.SlideMotor1.getCurrentPosition() > 1500) {
+                myRobot.arm.moveArmVersion2(-400);
+                myRobot.claw.turnOut(1);
+                myRobot.arm.moveArmVersion2(-350);
+                pressedOrNotPressedArm = true;
+            } else {
+                myRobot.claw.turnOut(1);
+            }
         }
 
         telemetry.addData("Slide Current Position" , myRobot.slide.SlideMotor1.getCurrentPosition());
@@ -70,16 +79,13 @@ public class TeleOpPT extends OpMode {
             telemetry.update();
         }
 
-
         // Send telemetry data
         telemetry.addData("Status", "Running");
         telemetry.addData("Drive", "drive (%.2f), strafe (%.2f), rotate (%.2f)");
         telemetry.addData("arm pos", myRobot.arm.getTelemetryForArm());
         telemetry.update();
 
-
         //Arm controls
-
         //Straight vertical
         if (gamepad2.y) {
             armTargetPos = -350;
@@ -100,8 +106,6 @@ public class TeleOpPT extends OpMode {
             armTargetPos = -700;
             pressedOrNotPressedArm = true;
         }
-        //armTargetPos = -700;
-        //pressedOrNotPressedArm = true;
 
         if (pressedOrNotPressedArm == true) {
             myRobot.arm.moveArmVersion2(armTargetPos);

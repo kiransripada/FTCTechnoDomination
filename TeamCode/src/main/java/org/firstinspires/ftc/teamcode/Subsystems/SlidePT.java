@@ -95,7 +95,7 @@ public class SlidePT {
         SlideMotor1.setPower(Range.clip(power * .75,-0.75,0.75));
         SlideMotor2.setPower(Range.clip(power * .75,-0.75,0.75));
 
-        if (SlideMotor1.getCurrent(CurrentUnit.AMPS) > 5 || SlideMotor2.getCurrent(CurrentUnit.AMPS) > 5){
+        if (SlideMotor1.getCurrent(CurrentUnit.AMPS) > 6 || SlideMotor2.getCurrent(CurrentUnit.AMPS) > 6){
             target = SlideMotor1.getCurrentPosition() + 50;
             SlideMotor1.setPower(0);
             SlideMotor2.setPower(0);
