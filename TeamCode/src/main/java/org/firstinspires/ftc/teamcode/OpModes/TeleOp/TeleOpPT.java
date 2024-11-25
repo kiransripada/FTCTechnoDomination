@@ -23,6 +23,12 @@ public class TeleOpPT extends OpMode {
     private int slideTargetPos = 0;
     boolean pressedOrNotPressedArm = false;
     boolean pressedOrNotPressedSlide = false;
+    boolean sampleDropped = false;
+    boolean specimenDropped = false;
+    int startPosTracking = 0;
+    double driveToRungDis = 21.0;
+    boolean driveToRung = false;
+    boolean driveStarted = false;
 
     @Override
     public void init() {
@@ -34,10 +40,12 @@ public class TeleOpPT extends OpMode {
         telemetry.addData("Status", "Initialized");
         telemetry.addData("Auto Arm Position",myRobot.arm.endAutoArmPosition);
         telemetry.update();
+
     }
 
     @Override
     public void loop() {
+
         telemetry.addData("Status", "In loop");
         // Drivetrain control
         double drive = -gamepad1.left_stick_y * params.powerReduction;
@@ -70,7 +78,10 @@ public class TeleOpPT extends OpMode {
             slideTargetPos = myRobot.slide.slideStartingPosition;
             pressedOrNotPressedSlide = true;
         } else if (gamepad1.b){
-            slideTargetPos = myRobot.slide.slideStartingPosition+ 750;
+            slideTargetPos = myRobot.slide.slideStartingPosition+ 300;
+            pressedOrNotPressedSlide = true;
+        } else if (gamepad1.x){
+        slideTargetPos = myRobot.slide.slideStartingPosition+ 750;
             pressedOrNotPressedSlide = true;
         }
 
@@ -107,11 +118,130 @@ public class TeleOpPT extends OpMode {
             armTargetPos = -700;
             pressedOrNotPressedArm = true;
         }
+        if (gamepad1.left_bumper) {
+            sampleDropped = false;
+        }
+/*
+        while (gamepad1.left_bumper && !sampleDropped) {
+            if (myRobot.slide.SlideMotor1.getCurrentPosition() > 1700) {
+                myRobot.arm.moveArmVersion2(-425);
+                telemetry.addData("Arm telemetry going to -400 pos", myRobot.arm.getTelemetryForArm());
+                telemetry.update();
+                if (myRobot.arm.ArmMotor1.getCurrentPosition() < -400) {
+                    myRobot.claw.turnOut(1);
+                    if (myRobot.claw.getPosition() == 0) {
+                        myRobot.arm.moveArmVersion2(-340);
+                        telemetry.addData("Arm telemetry going back to -350 pos", myRobot.arm.getTelemetryForArm());
+                        telemetry.update();
+                        sampleDropped = true;
+                        //break;
+                    }
+                }
+
+            }
+        } */
 
         if (pressedOrNotPressedArm == true) {
             myRobot.arm.moveArmVersion2(armTargetPos);
             telemetry.addData("Arm telemetry", myRobot.arm.getTelemetryForArm());
             telemetry.update();
         }
+
+
+/*
+        while (gamepad1.left_bumper && !sampleDropped) {
+            if (myRobot.slide.SlideMotor1.getCurrentPosition() < 500) {
+                myRobot.slide.moveSlidesVersion2(myRobot.slide.slideStartingPosition + 2100);
+            }
+
+            if (myRobot.slide.SlideMotor1.getCurrentPosition() > 2000) {
+                if (myRobot.claw.getPosition() == 1) {
+                    myRobot.arm.moveArmVersion2(-425);
+                    telemetry.addData("Arm telemetry going to -400 pos", myRobot.arm.getTelemetryForArm());
+                    telemetry.update();
+
+
+                    if (myRobot.arm.ArmMotor1.getCurrentPosition() < -400) {
+                        myRobot.claw.turnOut(1);
+
+                    }
+                } else if (myRobot.claw.getPosition() == 0) {
+                    if (myRobot.claw.getPosition() == 0) {
+                        myRobot.arm.moveArmVersion2(-350);
+                        telemetry.addData("Arm telemetry going back to -340 pos", myRobot.arm.getTelemetryForArm());
+                        telemetry.update();
+                        if (myRobot.arm.ArmMotor1.getCurrentPosition() > -360) {
+                            slideTargetPos = myRobot.slide.slideStartingPosition;
+                            pressedOrNotPressedSlide = true;
+                            telemetry.addData("Arm telemetry going back to -350 pos", myRobot.arm.getTelemetryForArm());
+                            telemetry.update();
+                            sampleDropped = true;
+                        }
+                        //break;
+                    }
+
+                }
+
+            }
+
+
+        }
+        */
+
+
+
+
+       /* if (gamepad1.right_bumper) {
+            specimenDropped = true;
+            driveStarted = false;
+            startPosTracking = myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition();
+            if (myRobot.slide.SlideMotor1.getCurrentPosition() < myRobot.slide.slideStartingPosition + 50 ) {
+                slideTargetPos = myRobot.slide.slideStartingPosition + 150;
+                specimenDropped = false;
+            }
+            pressedOrNotPressedSlide = true;
+        }
+
+        while (gamepad1.right_bumper && !specimenDropped) {
+
+
+
+            if (!driveStarted) {
+                myRobot.driveTrain.driveStraightPT(params.defaultDrivePower * params.powerReduction, driveToRungDis);
+                //myRobot.slide.moveSlidesVersion2(myRobot.slide.slideStartingPosition + 200);
+                driveStarted = true;
+            }
+            if ((myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition() - myRobot.driveTrain.getNewPosition(driveToRungDis)) > 20) {
+                driveToRung = true;
+                myRobot.driveTrain.stop();
+            } else {
+                driveToRung = false;
+            }
+
+            if (driveToRung && !myRobot.driveTrain.FrontLeftDCMotor.isBusy()){
+                if (myRobot.slide.SlideMotor1.getCurrentPosition() > myRobot.slide.slideStartingPosition + 100 && myRobot.slide.SlideMotor1.getCurrentPosition() < myRobot.slide.slideStartingPosition + 200) {
+                    slideTargetPos = myRobot.slide.slideStartingPosition + 600;
+                    pressedOrNotPressedSlide = true;
+                }
+
+                else if (myRobot.slide.SlideMotor1.getCurrentPosition() > myRobot.slide.slideStartingPosition + 400) {
+
+                    myRobot.claw.turnOut(1);
+
+                    if (myRobot.claw.getPosition() == 0) {
+                        slideTargetPos = myRobot.slide.slideStartingPosition;
+                        pressedOrNotPressedSlide = true;
+                        myRobot.arm.moveArmVersion2(-350);
+                        driveToRung = false;
+                        //myRobot.slide.moveSlidesVersion2(myRobot.slide.slideStartingPosition + 800);
+                        specimenDropped = true;
+                    }
+                }
+
+            }
+
+        */
+
+
     }
 }

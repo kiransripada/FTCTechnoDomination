@@ -79,40 +79,24 @@ public class AutoParkLeftTestbasket extends LinearOpMode {
                 }
             }
 
-            //sleep(1000);
             if (stepOne) {
                 myRobot.driveTrain.initializedFrontLeft = false;
                 myRobot.driveTrain.initializedFrontRight = false;
-                //telemetry.addData("StepOne", " tar pos " + myRobot.driveTrain.getNewPosition(11.0));
-                //telemetry.update();
-                //sleep(1000);
                 if(!driveStarted) {
                     driveToBasket = myRobot.driveTrain.driveStraightPT(params.defaultDrivePower * params.powerReduction, driveToBasketDis);
                     driveStarted = true;
                 }
-                //telemetry.addData("StepOne", "Running curr pos " + myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition());
-                //telemetry.addData("StepOne", "drive reached " + driveStraightReached);
-                //telemetry.update();
-                //sleep(1000);
 
                 if ((myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition() - myRobot.driveTrain.getNewPosition(driveToBasketDis)) > 20) {
                     driveToBasket = true;
                 } else {
                     driveToBasket = false;
                 }
-               /* telemetry.addData("StepOne", "Running curr pos " + myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition());
-                telemetry.addData("StepOne", stepOne);
-                telemetry.addData("StepOne", " tar pos " + myRobot.driveTrain.getNewPosition(driveToBasketDis));
-                telemetry.addData("StepOne", "drive reached " + driveToBasket);
-                */
 
                 if (driveToBasket) {
                     stepOne = false;
                     myRobot.driveTrain.stop();
                     driveToBasket = false;
-                    //driveStraightReached = false;
-                    //telemetry.addData("StepOne after", "drive reached " + driveToBasket);
-                    //telemetry.update();
                     stepTwo = true;
                     startPosTracking = myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition();
                 }
@@ -239,11 +223,14 @@ public class AutoParkLeftTestbasket extends LinearOpMode {
 
                 myRobot.claw.turnOut(1);
                 myRobot.slide.moveSlidesVersion2(myRobot.slide.slideStartingPosition);
-                myRobot.arm.moveArmVersion2(-350);
-                telemetry.addData("Arm telemetry", myRobot.arm.getTelemetryForArm());
+                myRobot.arm.moveArmVersion2(-1, 0.15);
+                telemetry.addData("Arm telemetry IN STEP 8", myRobot.arm.getTelemetryForArm());
                 telemetry.update();
                 myRobot.arm.endAutoArmPosition = myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1);
-                break;
+
+                if (myRobot.arm.ArmMotor1.getCurrentPosition() > 50) {
+                    break;
+                }
             }
 
     }

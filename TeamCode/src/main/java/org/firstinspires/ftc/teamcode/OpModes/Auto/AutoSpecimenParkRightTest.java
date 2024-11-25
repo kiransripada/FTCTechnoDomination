@@ -69,50 +69,30 @@ public class AutoSpecimenParkRightTest extends LinearOpMode {
             if (stepZero) {
                 myRobot.claw.turnIn(1);
                 myRobot.arm.moveArmVersion2(-350);
-                //telemetry.addData("Arm telemetry", myRobot.arm.getTelemetryForArm());
-                //telemetry.update();
                 myRobot.slide.moveSlidesVersion2(myRobot.slide.slideStartingPosition + 200);
-                telemetry.addData("Slides telemetry", myRobot.slide.getTelemetryForSlides());
-                telemetry.update();
                 if (!driveToRung) {
                     stepOne = true;
                 }
             }
 
-            //sleep(1000);
             if (stepOne) {
                 myRobot.driveTrain.initializedFrontLeft = false;
                 myRobot.driveTrain.initializedFrontRight = false;
-                //telemetry.addData("StepOne", " tar pos " + myRobot.driveTrain.getNewPosition(11.0));
-                //telemetry.update();
-                //sleep(1000);
                 if(!driveStarted) {
                     driveToRung = myRobot.driveTrain.driveStraightPT(params.defaultDrivePower * params.powerReduction, driveToRungDis);
                     driveStarted = true;
                 }
-                //telemetry.addData("StepOne", "Running curr pos " + myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition());
-                //telemetry.addData("StepOne", "drive reached " + driveStraightReached);
-                //telemetry.update();
-                //sleep(1000);
 
                 if ((myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition() - myRobot.driveTrain.getNewPosition(driveToRungDis)) > 20) {
                     driveToRung = true;
                 } else {
                     driveToRung = false;
                 }
-               /* telemetry.addData("StepOne", "Running curr pos " + myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition());
-                telemetry.addData("StepOne", stepOne);
-                telemetry.addData("StepOne", " tar pos " + myRobot.driveTrain.getNewPosition(driveToBasketDis));
-                telemetry.addData("StepOne", "drive reached " + driveToBasket);
-                */
 
                 if (driveToRung) {
                     stepOne = false;
                     myRobot.driveTrain.stop();
                     driveToRung = false;
-                    //driveStraightReached = false;
-                    //telemetry.addData("StepOne after", "drive reached " + driveToBasket);
-                    //telemetry.update();
                     stepTwo = true;
                     startPosTracking = myRobot.driveTrain.FrontLeftDCMotor.getCurrentPosition();
                 }
@@ -152,8 +132,8 @@ public class AutoSpecimenParkRightTest extends LinearOpMode {
                 myRobot.arm.moveArmVersion2(-350);
                 myRobot.slide.moveSlidesVersion2(myRobot.slide.slideStartingPosition);
                 //myRobot.arm.moveArmVersion2(0);
-                telemetry.addData("Slides telemetry", myRobot.slide.getTelemetryForSlides());
-                telemetry.update();
+                //telemetry.addData("Slides telemetry", myRobot.slide.getTelemetryForSlides());
+                //telemetry.update();
                 if (myRobot.slide.SlideMotor1.getCurrentPosition() < myRobot.slide.slideStartingPosition + 250) {
                     myRobot.claw.turnOut(1);
                     myRobot.arm.moveArmVersion2(-350);
@@ -240,11 +220,14 @@ public class AutoSpecimenParkRightTest extends LinearOpMode {
 
                 myRobot.claw.turnOut(1);
                 myRobot.slide.moveSlidesVersion2(myRobot.slide.slideStartingPosition);
-                myRobot.arm.moveArmVersion2(-350);
-                telemetry.addData("Arm telemetry", myRobot.arm.getTelemetryForArm());
+                myRobot.arm.moveArmVersion2(-1, 0.15);
+                telemetry.addData("Arm telemetry IN STEP 8", myRobot.arm.getTelemetryForArm());
                 telemetry.update();
                 myRobot.arm.endAutoArmPosition = myRobot.arm.getCurrentPosition(myRobot.arm.ArmMotor1);
-                break;
+
+                if (myRobot.arm.ArmMotor1.getCurrentPosition() > 50) {
+                    break;
+                }
             }
 
         }

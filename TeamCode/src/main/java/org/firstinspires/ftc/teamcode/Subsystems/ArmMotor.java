@@ -121,7 +121,6 @@ public class ArmMotor {
     }
 
     public void moveArm(double distance) {
-
         pidfOrig = ArmMotor1.getPIDFCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);
 
         // Change coefficients using methods included with DcMotorEx class.
@@ -222,16 +221,38 @@ public class ArmMotor {
     public String getTelemetryForArm(){
 
         String telemetry = "";
-        telemetry = telemetry + "pos - " + ArmMotor1.getCurrentPosition();
-        telemetry = telemetry + "pid"+ pid;
-        telemetry = telemetry + "ff"+ ff;
-        telemetry = telemetry + "power"+ power;
-        telemetry = telemetry + "target"+ targetPos;
+        telemetry = telemetry + "\n pos - " + ArmMotor1.getCurrentPosition();
+        telemetry = telemetry + "\n pid"+ pid;
+        telemetry = telemetry + "\n ff"+ ff;
+        telemetry = telemetry + "\n power"+ power;
+        telemetry = telemetry + "\n target"+ targetPos;
 
-        telemetry = telemetry + "End of Auto Arm Position: " + endAutoArmPosition;
+        telemetry = telemetry + "\n End of Auto Arm Position: " + endAutoArmPosition;
 
 
         return telemetry;
+    }
+    public void moveArmVersion2(int target, double powerRange) {
+        p =0.0180;
+        i=0;
+        d=0.0009;
+        f=0.77;
+        ticks_in_degree =  1425.1/180.0;
+
+        controller.setPID(p, i, d);
+        armPos = ArmMotor1.getCurrentPosition();
+        targetPos = target - endAutoArmPosition;
+        pid = controller.calculate(armPos, targetPos);
+        ff = Math.cos(Math.toRadians(targetPos / ticks_in_degree)) * f;
+
+        power = pid + ff;
+
+        ArmMotor1.setPower(Range.clip(power * .75,-powerRange,powerRange));
+
+        //ArmMotor1.setPower(power * .75);
+
+
+
     }
 }
 //PIDCoefficients pidOrig = motorExLeft.getPIDCoefficients(DcMotor.RunMode.RUN_USING_ENCODER);

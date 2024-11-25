@@ -92,11 +92,11 @@ public class SlidePT {
         double power = pid + ff;
 
 
-        SlideMotor1.setPower(Range.clip(power * .75,-0.75,0.75));
-        SlideMotor2.setPower(Range.clip(power * .75,-0.75,0.75));
+        SlideMotor1.setPower(Range.clip(power * .75,-0.85,0.85));
+        SlideMotor2.setPower(Range.clip(power * .75,-0.85,0.85));
 
         if (SlideMotor1.getCurrent(CurrentUnit.AMPS) > 6 || SlideMotor2.getCurrent(CurrentUnit.AMPS) > 6){
-            target = SlideMotor1.getCurrentPosition() + 50;
+            target = SlideMotor1.getCurrentPosition();
             SlideMotor1.setPower(0);
             SlideMotor2.setPower(0);
         }
